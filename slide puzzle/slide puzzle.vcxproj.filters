@@ -1,0 +1,476 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <FxCompile Include="Resources\shaders\FBX\FBXVS.hlsl">
+      <Filter>HLSL\OBJ</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\PostEffect\DepthOfFieldPS.hlsl">
+      <Filter>HLSL\OBJ</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\PostEffect\DepthOfFieldVS.hlsl">
+      <Filter>HLSL\OBJ</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\FBX\FBXPS.hlsl">
+      <Filter>HLSL\OBJ</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\FBX\FBXShadowPS.hlsl">
+      <Filter>HLSL\OBJ</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\FBX\FBXShadowVS.hlsl">
+      <Filter>HLSL\OBJ</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Object\NormalMapPS.hlsl">
+      <Filter>HLSL\OBJ</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Object\NormalMapVS.hlsl">
+      <Filter>HLSL\OBJ</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Object\NoShadowOBJPS.hlsl">
+      <Filter>HLSL\OBJ</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Object\NoShadowOBJVS.hlsl">
+      <Filter>HLSL\OBJ</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Object\OBJPixelShader.hlsl">
+      <Filter>HLSL\OBJ</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Object\OBJToonPS.hlsl">
+      <Filter>HLSL\OBJ</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Object\OBJToonVS.hlsl">
+      <Filter>HLSL\OBJ</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Object\OBJVertexShader.hlsl">
+      <Filter>HLSL\OBJ</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\ParticleGS.hlsl">
+      <Filter>HLSL\Particle</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\ParticlePS.hlsl">
+      <Filter>HLSL\Particle</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\ParticleVS.hlsl">
+      <Filter>HLSL\Particle</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\PostEffect\PostEffectNormalPS.hlsl">
+      <Filter>HLSL\PostEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\PostEffect\PostEffectNormalVS.hlsl">
+      <Filter>HLSL\PostEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\PostEffect\PostEffectTestPS.hlsl">
+      <Filter>HLSL\PostEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\PostEffect\PostEffectTestVS.hlsl">
+      <Filter>HLSL\PostEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\SpriteVS.hlsl">
+      <Filter>HLSL\Sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\SpritePS.hlsl">
+      <Filter>HLSL\Sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\ShadowMapVS.hlsl">
+      <Filter>HLSL\Sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\ShadowMap\ShadowMapVS.hlsl">
+      <Filter>HLSL\Sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\ShadowMapPS.hlsl">
+      <Filter>HLSL\Sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\ShadowMap\ShadowMapPS.hlsl">
+      <Filter>HLSL\Sprite</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="App\scene\TitleScene.cpp">
+      <Filter>ソースファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="App\scene\GameScene.cpp">
+      <Filter>ソースファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="App\scene\StageSelect.cpp">
+      <Filter>ソースファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="App\scene\SceneManager.cpp">
+      <Filter>ソースファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="App\scene\ResultScene.cpp">
+      <Filter>ソースファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="App\scene\BaseScene.cpp">
+      <Filter>ソースファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\3d\Camera.cpp">
+      <Filter>Library\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\Audio\Audio.cpp">
+      <Filter>Library\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\collision\Collision.cpp">
+      <Filter>Library\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\Input\Controller.cpp">
+      <Filter>Library\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\2d\DebugText.cpp">
+      <Filter>Library\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\base\DirectXBase.cpp">
+      <Filter>Library\DirectXCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\Helper\Easing.cpp">
+      <Filter>Library\Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\3d\FbxLoader.cpp">
+      <Filter>Library\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\3d\FBXObject3d.cpp">
+      <Filter>Library\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\base\Fps.cpp">
+      <Filter>Library\DirectXCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\imgui\imgui.cpp">
+      <Filter>Library\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\imgui\imgui_demo.cpp">
+      <Filter>Library\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\imgui\imgui_draw.cpp">
+      <Filter>Library\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\imgui\imgui_impl_dx12.cpp">
+      <Filter>Library\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\imgui\imgui_impl_win32.cpp">
+      <Filter>Library\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\imgui\imgui_stdlib.cpp">
+      <Filter>Library\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\imgui\imgui_tables.cpp">
+      <Filter>Library\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\imgui\imgui_widgets.cpp">
+      <Filter>Library\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\Input\Input.cpp">
+      <Filter>Library\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\Input\Keybord.cpp">
+      <Filter>Library\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\Helper\LoadCSV.cpp">
+      <Filter>Library\Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\Helper\LoadJson.cpp">
+      <Filter>Library\Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\3d\Model.cpp">
+      <Filter>Library\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\3d\Particle3D.cpp">
+      <Filter>Library\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\3d\ParticleManager.cpp">
+      <Filter>Library\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\Pipeline\Pipeline.cpp">
+      <Filter>Library\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\2d\PostEffect.cpp">
+      <Filter>Library\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\Pipeline\ShaderManager.cpp">
+      <Filter>Library\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\2d\ShadowMap.cpp">
+      <Filter>Library\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\3d\Shape.cpp">
+      <Filter>Library\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\Texture\Texture.cpp">
+      <Filter>Library\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\base\Window.cpp">
+      <Filter>Library\DirectXCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\2d\Sprite.cpp">
+      <Filter>Library\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\Helper\Vec.cpp">
+      <Filter>Library\Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\3d\LightGroup.cpp">
+      <Filter>Library\3D\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\Input\Mouse.cpp">
+      <Filter>Library\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\3d\Object.cpp">
+      <Filter>Library\3D\Object</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Library\3d\DirectionalLight.h">
+      <Filter>HLSL\OBJ</Filter>
+    </ClInclude>
+    <ClInclude Include="App\scene\TitleScene.h">
+      <Filter>ソースファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="App\scene\GameScene.h">
+      <Filter>ソースファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="App\scene\StageSelect.h">
+      <Filter>ソースファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="App\scene\SceneManager.h">
+      <Filter>ソースファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="App\scene\ResultScene.h">
+      <Filter>ソースファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="App\scene\BaseScene.h">
+      <Filter>ソースファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\3d\Camera.h">
+      <Filter>Library\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Audio\Audio.h">
+      <Filter>Library\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\collision\CollisionPrimitive.h">
+      <Filter>Library\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\collision\Collision.h">
+      <Filter>Library\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Input\Controller.h">
+      <Filter>Library\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\2d\DebugText.h">
+      <Filter>Library\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\base\DirectXBase.h">
+      <Filter>Library\DirectXCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Helper\Easing.h">
+      <Filter>Library\Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\3d\FBXObject3d.h">
+      <Filter>Library\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\3d\FbxLoader.h">
+      <Filter>Library\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\base\Fps.h">
+      <Filter>Library\DirectXCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\imgui\imgui.h">
+      <Filter>Library\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\imgui\imgui_impl_dx12.h">
+      <Filter>Library\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\imgui\imgui_impl_win32.h">
+      <Filter>Library\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\imgui\imgui_internal.h">
+      <Filter>Library\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\imgui\imgui_stdlib.h">
+      <Filter>Library\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\imgui\imstb_rectpack.h">
+      <Filter>Library\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\imgui\imstb_textedit.h">
+      <Filter>Library\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\imgui\imstb_truetype.h">
+      <Filter>Library\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\imgui\imconfig.h">
+      <Filter>Library\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Input\Keybord.h">
+      <Filter>Library\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Input\Input.h">
+      <Filter>Library\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Helper\LoadJson.h">
+      <Filter>Library\Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Helper\LoadCSV.h">
+      <Filter>Library\Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\3d\Model.h">
+      <Filter>Library\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\3d\Particle3D.h">
+      <Filter>Library\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\3d\ParticleManager.h">
+      <Filter>Library\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Pipeline\Pipeline.h">
+      <Filter>Library\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\2d\PostEffect.h">
+      <Filter>Library\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\base\Safe_delete.h">
+      <Filter>Library\DirectXCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\2d\ShadowMap.h">
+      <Filter>Library\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Pipeline\ShaderManager.h">
+      <Filter>Library\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Texture\Texture.h">
+      <Filter>Library\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\base\Window.h">
+      <Filter>Library\DirectXCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\2d\Sprite.h">
+      <Filter>Library\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Helper\Vec.h">
+      <Filter>Library\Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\base\Singleton.h">
+      <Filter>Library\DirectXCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\3d\LightGroup.h">
+      <Filter>Library\3D\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\3d\SpotLight.h">
+      <Filter>Library\3D\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\3d\PointLight.h">
+      <Filter>Library\3D\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Input\Mouse.h">
+      <Filter>Library\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\3d\CircleShadow.h">
+      <Filter>Library\3D\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\3d\Object.h">
+      <Filter>Library\3D\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\3d\Shape.h">
+      <Filter>Library\3D\Object</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shaders\PostEffect\DepthOfField.hlsli">
+      <Filter>HLSL\OBJ</Filter>
+    </None>
+    <None Include="Resources\shaders\FBX\FBXShadow.hlsli">
+      <Filter>HLSL\OBJ</Filter>
+    </None>
+    <None Include="Resources\shaders\FBX\FBX.hlsli">
+      <Filter>HLSL\OBJ</Filter>
+    </None>
+    <None Include="Resources\shaders\Object\NormalMap.hlsli">
+      <Filter>HLSL\OBJ</Filter>
+    </None>
+    <None Include="Resources\shaders\Object\NoShadowOBJ.hlsli">
+      <Filter>HLSL\OBJ</Filter>
+    </None>
+    <None Include="Resources\shaders\Object\OBJShaderHeader.hlsli">
+      <Filter>HLSL\OBJ</Filter>
+    </None>
+    <None Include="Resources\shaders\Object\OBJToon.hlsli">
+      <Filter>HLSL\OBJ</Filter>
+    </None>
+    <None Include="Resources\shaders\Particle.hlsli">
+      <Filter>HLSL\Particle</Filter>
+    </None>
+    <None Include="Resources\shaders\PostEffect\PostEffectNormal.hlsli">
+      <Filter>HLSL\PostEffect</Filter>
+    </None>
+    <None Include="Resources\shaders\PostEffect\PostEffectTest.hlsli">
+      <Filter>HLSL\PostEffect</Filter>
+    </None>
+    <None Include="Resources\shaders\Sprite.hlsli">
+      <Filter>HLSL\Sprite</Filter>
+    </None>
+    <None Include="Resources\shaders\ShadowMap.hlsli">
+      <Filter>HLSL\Sprite</Filter>
+    </None>
+    <None Include="Resources\shaders\ShadowMap\ShadowMap.hlsli">
+      <Filter>HLSL\Sprite</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="HLSL">
+      <UniqueIdentifier>{11cbce0a-3b6e-43c8-8044-503d240ae52e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HLSL\OBJ">
+      <UniqueIdentifier>{85714a0f-1690-4714-9ed2-60051f75d23e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HLSL\Particle">
+      <UniqueIdentifier>{9810b177-6148-450e-8124-425eaeb5558e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HLSL\PostEffect">
+      <UniqueIdentifier>{360e775d-eaa4-4341-969a-fc967b4216ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HLSL\Sprite">
+      <UniqueIdentifier>{08aa66cc-f4e3-43e6-9a9d-8c5ca651bb90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library">
+      <UniqueIdentifier>{c4994768-8f77-4d71-a0cf-6a618465d43f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル">
+      <UniqueIdentifier>{54d5ed45-c15f-4c6f-b9b4-9619c0804c53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\Scene">
+      <UniqueIdentifier>{55e0c2dd-0321-4e70-800e-e10eca93f87c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\2D">
+      <UniqueIdentifier>{709d8e8a-b1c4-4179-aa01-91f2e9ff9330}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Audio">
+      <UniqueIdentifier>{4ef3220a-b786-4af3-b9bc-8ba5c9d5e338}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Collision">
+      <UniqueIdentifier>{4171f978-ac36-4105-b5f6-fa1275b0efe9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Input">
+      <UniqueIdentifier>{4fc115a2-c55d-4cce-a1ab-d013bf4f3416}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Helper">
+      <UniqueIdentifier>{1784f810-09e0-4dac-b822-f152705a69d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\imgui">
+      <UniqueIdentifier>{b3a032a8-3ba5-47a4-b591-98993cecbf3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Pipeline">
+      <UniqueIdentifier>{3e2abb36-068d-4107-8249-579fb13d0914}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Texture">
+      <UniqueIdentifier>{c016c1ee-42bc-425c-8f41-91a60d70c700}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\DirectXCommon">
+      <UniqueIdentifier>{5f31865b-59e7-45f9-9904-28018ab41ebb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\3D">
+      <UniqueIdentifier>{070531f4-fbaa-4944-84d7-1241175f983f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\3D\Light">
+      <UniqueIdentifier>{0e1e767e-2b67-4fd0-99bd-ad5ec049c9b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\3D\Object">
+      <UniqueIdentifier>{a444fb09-5e6f-4a28-abd6-8bf657c7a942}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
