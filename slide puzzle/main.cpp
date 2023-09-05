@@ -1,5 +1,5 @@
 ﻿#include<Windows.h>
-#include"../PenguinBreak/App/scene/SceneManager.h"
+#include"../slide puzzle/App/scene/SceneManager.h"
 #include <FbxLoader.h>
 const int window_width = 1280;//横幅
 const int window_height = 720;
