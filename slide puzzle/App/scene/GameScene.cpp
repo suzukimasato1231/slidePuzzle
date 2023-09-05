@@ -26,7 +26,7 @@ void GameScene::Init()
 	lightGroup->SetShadowDir(Vec3(0, 1, 0));
 	//音データ読み込み
 	//カメラ位置をセット
-	Camera::Get()->SetCamera(Vec3{ 0,0,-200 }, Vec3{ 0, 0, 0 }, Vec3{ 0, 1, 0 });
+	Camera::Get()->SetCamera(Vec3{ 0,30,-5 }, Vec3{ 0, -3, 0 }, Vec3{ 0, 1, 0 });
 	//スプライト画像読み込み
 	FBXObject3d::SetLight(lightGroup.get());
 	Object::SetLight(lightGroup.get());

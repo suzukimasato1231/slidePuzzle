@@ -24,7 +24,7 @@ void StageSelect::Init()
 	lightGroup->SetDirLightDir(0, XMVECTOR{ 0,0,1,0 });
 	lightGroup->SetShadowDir(Vec3(0, 1, -1));
 	
-
+	Camera::Get()->SetCamera(Vec3{ 0,30,-5 }, Vec3{ 0, -3, 0 }, Vec3{ 0, 1, 0 });
 	FBXObject3d::SetLight(lightGroup.get());
 	Object::SetLight(lightGroup.get());
 }
