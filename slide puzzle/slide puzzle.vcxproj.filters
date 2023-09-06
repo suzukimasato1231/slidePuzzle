@@ -84,7 +84,6 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="App\scene\TitleScene.cpp">
       <Filter>ソースファイル\Scene</Filter>
     </ClCompile>
@@ -213,6 +212,15 @@
     </ClCompile>
     <ClCompile Include="Library\3d\Object.cpp">
       <Filter>Library\3D\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ソースファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="plate.cpp">
+      <Filter>ソースファイル\plate</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>ソースファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -369,6 +377,12 @@
     <ClInclude Include="Library\3d\Shape.h">
       <Filter>Library\3D\Object</Filter>
     </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ソースファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="plate.h">
+      <Filter>ソースファイル\plate</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\PostEffect\DepthOfField.hlsli">
@@ -471,6 +485,12 @@
     </Filter>
     <Filter Include="Library\3D\Object">
       <UniqueIdentifier>{a444fb09-5e6f-4a28-abd6-8bf657c7a942}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\Player">
+      <UniqueIdentifier>{c403783b-65b2-40c2-8d1e-09bbda53df30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\plate">
+      <UniqueIdentifier>{6a34bbba-0d05-4249-b7bc-91447ecd651c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

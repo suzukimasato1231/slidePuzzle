@@ -336,6 +336,8 @@
     <ClInclude Include="Library\Pipeline\Pipeline.h" />
     <ClInclude Include="Library\Pipeline\ShaderManager.h" />
     <ClInclude Include="Library\Texture\Texture.h" />
+    <ClInclude Include="plate.h" />
+    <ClInclude Include="Player.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App\scene\BaseScene.cpp" />
@@ -382,6 +384,8 @@
     <ClCompile Include="Library\Pipeline\ShaderManager.cpp" />
     <ClCompile Include="Library\Texture\Texture.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="plate.cpp" />
+    <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

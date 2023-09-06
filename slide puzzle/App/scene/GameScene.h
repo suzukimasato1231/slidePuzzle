@@ -6,6 +6,8 @@
 #include"BaseScene.h"
 #include"Object.h"
 #include<Audio.h>
+#include"../slide puzzle/Player.h"
+#include"../slide puzzle/plate.h"
 extern const int window_width;
 extern const int window_height;
 
@@ -43,4 +45,6 @@ private:
 	std::unique_ptr<Audio> audio;
 private://’è‹`
 	
+	std::unique_ptr<Player>player;
+	std::unique_ptr<Plate>plate;
 };
