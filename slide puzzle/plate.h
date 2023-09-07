@@ -20,6 +20,13 @@ enum PanelStatus
 class Plate
 {
 public:
+	struct StageBlockData
+	{
+		std::vector<Vec3> position;
+		std::vector<PanelStatus> blockType;
+	};
+
+public:
 	//コンストラクタ
 	Plate();
 	//ですコンストラクタ
@@ -36,6 +43,25 @@ public:
 	void Draw();
 
 	int GetStage(int i, int j) { return stage[j][i]; }
+
+	void SetKeyFlag(bool num) { keyFlag_ = num; }
+
+private:
+
+	void None();
+
+	void BeforeMove();
+
+	void Move();
+
+	void Selection();
+
+	void NullStageBlockNumber();
+
+	int GetStageBlockNumber(int num);
+
+	int GetSaveBlockNumber(int num);
+
 private:
 	ObjectData container;//3x4の入れ物
 	ObjectData plateCross;//十字のプレート
@@ -48,5 +74,14 @@ private:
 		 HEIGHTSTRAIGHTLINE,CROSS,NONE,HEIGHTSTRAIGHTLINE,
 		CUR_RIGHTUP,WIDTHSTRAIGHTLINE,WIDTHSTRAIGHTLINE,CUR_LEFTUP,
 	};
+
+	// 関数の管理
+	std::vector<std::function<void()>> func_;
+	// 関数の番号
+	size_t phase_ = 0;
+	// キーフラグ
+	bool keyFlag_ = false;
+	//
+	StageBlockData blockData_;
 };
 
