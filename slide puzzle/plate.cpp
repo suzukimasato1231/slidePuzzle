@@ -24,6 +24,7 @@ void Plate::Init()
 		for (int i = 0; i < 4; i++)
 		{
 			blockData_.position.push_back(Vec3(basePos.x + i * varPos.x, basePos.y, basePos.z + j * varPos.y));
+			seaveStageBlockPosition_.push_back(Vec3(basePos.x + i * varPos.x, basePos.y, basePos.z + j * varPos.y));
 			blockData_.blockType.push_back(static_cast<PanelStatus>(stage[j][i]));
 		}
 	}
@@ -125,21 +126,21 @@ void Plate::None()
 
 void Plate::BeforeMove()
 {
-	/*bool flag = false;
-	size_t count = static_cast<size_t>(GetStageBlockCount(static_cast<int>(blockPhase_[0])));
+	bool flag = false;
+	size_t count = static_cast<size_t>(GetStageBlockNumber(static_cast<int>(moveBlockNumber[0])));
 	int number = 0;
-	for (int i = 0; i < MapChip::GetInstance()->GetMapChipMaxX("map"); i++)
+	for (int i = 0; i < 4; i++)
 	{
-		if (count == nullBlockPhase_[0])
+		if (count == nullBlockNumber[0])
 		{
 			flag = true;
-			blockPhase_.push_back(GetSaveBlockCount(GetStageBlockCount(static_cast<int>(blockPhase_[0])) - number));
-			nullBlockPhase_.push_back(nullBlockPhase_[0] + number);
+			moveBlockNumber.push_back(GetSaveBlockNumber(GetStageBlockNumber(static_cast<int>(moveBlockNumber[0])) - number));
+			nullBlockNumber.push_back(nullBlockNumber[0] + number);
 		}
 
 		if (count == 0 ||
-			count == 3 ||
-			count == 6)
+			count == 4 ||
+			count == 8)
 		{
 			break;
 		}
@@ -155,15 +156,15 @@ void Plate::BeforeMove()
 	if (!flag)
 	{
 		number = 0;
-		count = static_cast<size_t>(GetStageBlockCount(static_cast<int>(blockPhase_[0])));
-		for (int i = 0; i < MapChip::GetInstance()->GetMapChipMaxX("map"); i++)
+		count = static_cast<size_t>(GetStageBlockNumber(static_cast<int>(moveBlockNumber[0])));
+		for (int i = 0; i < 4; i++)
 		{
-			if (count == nullBlockPhase_[0])
+			if (count == nullBlockNumber[0])
 			{
 				flag = true;
 
-				blockPhase_.push_back(GetSaveBlockCount(GetStageBlockCount(static_cast<int>(blockPhase_[0])) + number));
-				nullBlockPhase_.push_back(nullBlockPhase_[0] - number);
+				moveBlockNumber.push_back(GetSaveBlockNumber(GetStageBlockNumber(static_cast<int>(moveBlockNumber[0])) + number));
+				nullBlockNumber.push_back(nullBlockNumber[0] - number);
 			}
 
 			if (count == 2 ||
@@ -185,14 +186,14 @@ void Plate::BeforeMove()
 	if (!flag)
 	{
 		number = 0;
-		count = static_cast<size_t>(GetStageBlockCount(static_cast<int>(blockPhase_[0])));
-		for (int i = 0; i < MapChip::GetInstance()->GetMapChipMaxY("map"); i++)
+		count = static_cast<size_t>(GetStageBlockNumber(static_cast<int>(moveBlockNumber[0])));
+		for (int i = 0; i < 3; i++)
 		{
-			if (count == nullBlockPhase_[0])
+			if (count == nullBlockNumber[0])
 			{
 				flag = true;
-				blockPhase_.push_back(GetSaveBlockCount(GetStageBlockCount(static_cast<int>(blockPhase_[0])) + number * 3));
-				nullBlockPhase_.push_back(GetStageBlockCount(static_cast<int>(blockPhase_[0])) + (number * 3));
+				moveBlockNumber.push_back(GetSaveBlockNumber(GetStageBlockNumber(static_cast<int>(moveBlockNumber[0])) + number * 3));
+				nullBlockNumber.push_back(GetSaveBlockNumber(static_cast<int>(moveBlockNumber[0])) + (number * 3));
 			}
 
 			if (i != 0)
@@ -206,14 +207,14 @@ void Plate::BeforeMove()
 	if (!flag)
 	{
 		number = 0;
-		count = static_cast<size_t>(GetStageBlockCount(static_cast<int>(blockPhase_[0])));
-		for (int i = 0; i < MapChip::GetInstance()->GetMapChipMaxY("map"); i++)
+		count = static_cast<size_t>(GetStageBlockNumber(static_cast<int>(moveBlockNumber[0])));
+		for (int i = 0; i < 3; i++)
 		{
-			if (count == nullBlockPhase_[0])
+			if (count == nullBlockNumber[0])
 			{
 				flag = true;
-				blockPhase_.push_back(GetSaveBlockCount(GetStageBlockCount(static_cast<int>(blockPhase_[0])) - number * 3));
-				nullBlockPhase_.push_back(GetStageBlockCount(static_cast<int>(blockPhase_[0])) - (number * 3));
+				moveBlockNumber.push_back(GetSaveBlockNumber(GetStageBlockNumber(static_cast<int>(moveBlockNumber[0])) - number * 3));
+				nullBlockNumber.push_back(GetSaveBlockNumber(static_cast<int>(moveBlockNumber[0])) - (number * 3));
 			}
 
 			if (i != 0)
@@ -228,32 +229,32 @@ void Plate::BeforeMove()
 	if (!flag)
 	{
 		phase_ = 0;
-		blockPhase_.clear();
-		nullBlockPhase_.clear();
+		moveBlockNumber.clear();
+		nullBlockNumber.clear();
 		return;
 	}
 
-	phase_ = 2;*/
+	phase_ = 2;
 }
 
 void Plate::Move()
 {
-	/*size_t count = nullBlockPhase_.size() - 1;
-	for (int i = 0; i < blockPhase_.size(); i++)
+	size_t count = nullBlockNumber.size() - 1;
+	for (int i = 0; i < moveBlockNumber.size(); i++)
 	{
-		stageBlock_[blockPhase_[i]]->SetPosition(Ease::Action(EaseType::Out, EaseFunctionType::Quint, stageBlock_[blockPhase_[i]]->GetPosition(), savePosition_[nullBlockPhase_[count - i]], blockEaseData_->GetTimeRate()));
+		//blockData_.position[moveBlockNumber[i]]->SetPosition(Ease::Action(EaseType::Out, EaseFunctionType::Quint, stageBlock_[moveBlockNumber[i]]->GetPosition(), savePosition_[nullBlockNumber[count - i]], blockEaseData_->GetTimeRate()));
 	}
 
 
-	if (blockEaseData_->GetEndFlag())
+	/*if (blockEaseData_->GetEndFlag())
 	{
 		blockEaseData_->Reset();
-		blockPhase_.clear();
-		nullBlockPhase_.clear();
+		moveBlockNumber.clear();
+		nullBlockNumber.clear();
 		phase_ = 0;
-	}
+	}*/
 
-	blockEaseData_->Update();*/
+	//blockEaseData_->Update();
 }
 
 void Plate::Selection()
@@ -268,17 +269,17 @@ int Plate::GetStageBlockNumber(int num)
 {
 	int count = 0, temp = 0;
 
-	/*for (auto& a : savePosition_)
+	for (auto& a : seaveStageBlockPosition_)
 	{
-		if (a.x == stageBlock_[num]->GetPosition().x &&
-			a.y == stageBlock_[num]->GetPosition().y &&
-			a.z == stageBlock_[num]->GetPosition().z)
+		if (a.x == blockData_.position[num].x &&
+			a.y == blockData_.position[num].y &&
+			a.z == blockData_.position[num].z)
 		{
 			count = temp;
 			break;
 		}
 		temp++;
-	}*/
+	}
 
 	return count;
 }
@@ -287,17 +288,17 @@ int Plate::GetSaveBlockNumber(int num)
 {
 	int count = 0, temp = 0;
 
-	/*for (auto& a : stageBlock_)
+	for (auto& a : blockData_.position)
 	{
-		if (a->GetPosition().x == savePosition_[num].x &&
-			a->GetPosition().y == savePosition_[num].y &&
-			a->GetPosition().z == savePosition_[num].z)
+		if (a.x == seaveStageBlockPosition_[num].x &&
+			a.y == seaveStageBlockPosition_[num].y &&
+			a.z == seaveStageBlockPosition_[num].z)
 		{
 			count = temp;
 			break;
 		}
 		temp++;
-	}*/
+	}
 
 	return count;
 }

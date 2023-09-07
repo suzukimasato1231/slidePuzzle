@@ -1,5 +1,6 @@
 #pragma once
 #include<Object.h>
+#include <array>
 //パネルの種類
 enum PanelStatus
 {
@@ -81,7 +82,13 @@ private:
 	size_t phase_ = 0;
 	// キーフラグ
 	bool keyFlag_ = false;
-	//
+	// ステージ上のブロックのデータ
 	StageBlockData blockData_;
+	// ステージの位置の配列
+	std::vector<Vec3> seaveStageBlockPosition_;
+	// 動かすブロックの番号
+	std::vector<int> moveBlockNumber;
+	// 空のブロックの番号
+	std::vector<int> nullBlockNumber;
 };
 
