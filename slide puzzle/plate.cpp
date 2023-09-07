@@ -263,6 +263,26 @@ void Plate::Selection()
 
 void Plate::NullStageBlockNumber()
 {
+	for (int i = 0; i < seaveStageBlockPosition_.size(); i++)
+	{
+		bool flag = false;
+
+		for (auto& block : blockData_.position)
+		{
+			if (block.x == seaveStageBlockPosition_[i].x &&
+				block.y == seaveStageBlockPosition_[i].y &&
+				block.z == seaveStageBlockPosition_[i].z)
+			{
+				flag = true;
+			}
+		}
+
+		if (!flag)
+		{
+			nullBlockNumber.push_back(i);
+			break;
+		}
+	}
 }
 
 int Plate::GetStageBlockNumber(int num)
