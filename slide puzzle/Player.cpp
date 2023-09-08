@@ -26,6 +26,7 @@ void Player::Update(Plate* plate)
 {
 	DirectChange(plate);
 	Move();
+	CrstalGet(plate);
 }
 
 void Player::Draw()
@@ -73,100 +74,98 @@ void Player::DirectChange(Plate* plate)
 			position.x -= 0.2f;
 		}
 	}
-	for (int j = 0; j < 3; j++)
+	for (int i = 0; i < plate->GetPanelNum(); i++)
 	{
-		for (int i = 0; i < 4; i++)
+		//当たり判定
+		if (Collision::BoxCollision(
+			Vec2(position.x, position.z), Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z),
+			pSize / 2, sSize / 2))
 		{
-			//当たり判定
-			if (Collision::BoxCollision(
-				Vec2(position.x, position.z), Vec2(basePos.x + i * varPos.x, basePos.y + j * -varPos.y),
-				pSize / 2, sSize / 2))
+			switch (plate->GetPanelStatus(i))
 			{
-				switch (plate->GetStage(i, j))
+			case NONE:
+				isDead = true;
+				break;
+			case WIDTHSTRAIGHTLINE://横直線
+				LineInit();
+				TurnLeft();
+				TurnRight();
+				if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == UP || direction == DOWN))
 				{
-				case NONE:
 					isDead = true;
-					break;
-				case WIDTHSTRAIGHTLINE://横直線
-					LineInit();
-					TurnLeft();
-					TurnRight();
-					if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == UP || direction == DOWN))
-					{
-						isDead = true;
-					}
-					break;
-				case HEIGHTSTRAIGHTLINE://縦直線
-					LineInit();
-					TurnUp();
-					TurnDown();
-					if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == LEFT || direction == RIGHT))
-					{
-						isDead = true;
-					}
-					break;
-				case CROSS:            //十字
-					LineInit();
-					TurnLeft();
-					TurnRight();
-					TurnUp();
-					TurnDown();
-					break;
-				case CUR_LEFTUP:       //カーブ左と上	
-					TurnInit();
-					TurnDownLeft();
-					TurnRightUp();
-					if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == LEFT || direction == UP))
-					{
-						isDead = true;
-					}
-					break;
-				case CUR_LEFTDOWN:	   //カーブ左と下
-					TurnInit();
-					TurnRightDown();
-					TurnUpLeft();
-					if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == LEFT || direction == DOWN))
-					{
-						isDead = true;
-					}
-					break;
-				case CUR_RIGHTUP:      //カーブ右と上
-					TurnInit();
-					TurnLeftUp();
-					TurnDownRight();
-					if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == RIGHT || direction == UP))
-					{
-						isDead = true;
-					}
-					break;
-				case CUR_RIGHTDOWN:    //カーブ右と下
-					TurnInit();
-					TurnLeftDown();
-					TurnUpRight();
-					if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == RIGHT || direction == DOWN))
-					{
-						isDead = true;
-					}
-					break;
-				case DCUR_LEFTUP_RIGHTDOWN://ダブルカーブ左と上＆右と下
-					TurnInit();
-					TurnDownLeft();
-					TurnRightUp();
-					TurnLeftDown();
-					TurnUpRight();
-					break;
-				case DCUR_LEFTDOWN_RIGHTUP://ダブルカーブ左と下＆右と上
-					TurnInit();
-					TurnLeftUp();
-					TurnDownRight();
-					TurnRightDown();
-					TurnUpLeft();
-					break;
-				default:
-					break;
 				}
-				hit = true;
+				break;
+			case HEIGHTSTRAIGHTLINE://縦直線
+				LineInit();
+				TurnUp();
+				TurnDown();
+				if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == LEFT || direction == RIGHT))
+				{
+					isDead = true;
+				}
+				break;
+			case CROSS:            //十字
+				LineInit();
+				TurnLeft();
+				TurnRight();
+				TurnUp();
+				TurnDown();
+				break;
+			case CUR_LEFTUP:       //カーブ左と上	
+				TurnInit();
+				TurnDownLeft();
+				TurnRightUp();
+				if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == LEFT || direction == UP))
+				{
+					isDead = true;
+				}
+				break;
+			case CUR_LEFTDOWN:	   //カーブ左と下
+				TurnInit();
+				TurnRightDown();
+				TurnUpLeft();
+				if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == LEFT || direction == DOWN))
+				{
+					isDead = true;
+				}
+				break;
+			case CUR_RIGHTUP:      //カーブ右と上
+				TurnInit();
+				TurnLeftUp();
+				TurnDownRight();
+				if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == RIGHT || direction == UP))
+				{
+					isDead = true;
+				}
+				break;
+			case CUR_RIGHTDOWN:    //カーブ右と下
+				TurnInit();
+				TurnLeftDown();
+				TurnUpRight();
+				if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == RIGHT || direction == DOWN))
+				{
+					isDead = true;
+				}
+				break;
+			case DCUR_LEFTUP_RIGHTDOWN://ダブルカーブ左と上＆右と下
+				TurnInit();
+				TurnDownLeft();
+				TurnRightUp();
+				TurnLeftDown();
+				TurnUpRight();
+				break;
+			case DCUR_LEFTDOWN_RIGHTUP://ダブルカーブ左と下＆右と上
+				TurnInit();
+				TurnLeftUp();
+				TurnDownRight();
+				TurnRightDown();
+				TurnUpLeft();
+				break;
+			default:
+				break;
 			}
+			hit = true;
+
 		}
 	}
 	//タイル外にいったら死亡
@@ -215,6 +214,25 @@ void Player::Move()
 			isPosSecondFlag = false;
 			isCurFlag = false;
 			plateTime = 0.0f;
+			rotation = turnEndSecond;
+		}
+	}
+}
+
+void Player::CrstalGet(Plate* plate)
+{
+	const Vec2 crstalSize = { 5.0f,5.0f };
+	for (int i = 0; i < plate->GetPanelNum(); i++)
+	{
+		//当たり判定
+		if (plate->GetCrystal(i) == CRYSTALL && Collision::BoxCollision(
+			Vec2(position.x, position.z), Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z),
+			pSize / 2, crstalSize / 2))
+		{
+			crstalNum++;
+			turnSpeed += speedPlas;
+			//クリスタルが消える処理
+			plate->DeleteCrstal(i);
 		}
 	}
 }

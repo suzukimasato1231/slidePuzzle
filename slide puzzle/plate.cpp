@@ -15,6 +15,7 @@ void Plate::Init()
 	plateDoubleTurn = Shape::CreateOBJ("plateDoubleTurn", false, "plate/");//ダブルカーブ
 	plateLine = Shape::CreateOBJ("plateLine", false, "plate/");      //一直線
 	plateSingleTurn = Shape::CreateOBJ("plateSingleTurn", false, "plate/");//単一カーブ
+	crystallObject = Shape::CreateOBJ("sphere");
 
 	const Vec3 basePos = { -9.0f,-0.2f,6.0f };
 	const Vec2 varPos = { 6.1f,-6.1f };
@@ -26,6 +27,7 @@ void Plate::Init()
 			blockData_.position.push_back(Vec3(basePos.x + i * varPos.x, basePos.y, basePos.z + j * varPos.y));
 			seaveStageBlockPosition_.push_back(Vec3(basePos.x + i * varPos.x, basePos.y, basePos.z + j * varPos.y));
 			blockData_.blockType.push_back(static_cast<PanelStatus>(stage[j][i]));
+			blockData_.crytallFlag.push_back(static_cast<Crystal>(crystal[j][i]));
 		}
 	}
 
@@ -87,6 +89,11 @@ void Plate::Draw()
 		default:
 			break;
 		}
+		if (blockData_.crytallFlag[i] == CRYSTALL)
+		{
+			Object::Draw(crystallObject, blockData_.position[i],
+				Vec3(1.0f, 1.0f, 1.0f), Vec3(0.0f, 0.0f, 0.0f));
+		}
 	}
 
 	//入れ物
@@ -97,6 +104,11 @@ void Plate::AddSetSelectBlockNumber(int num)
 {
 	selectionBlockNumber_ += num;
 	selectionBlockNumber_ = std::clamp(selectionBlockNumber_, 0, static_cast<int>(seaveStageBlockPosition_.size() - 1));
+}
+
+void Plate::DeleteCrstal(int num)
+{
+	blockData_.crytallFlag[num] = NOCRYSTALL;
 }
 
 void Plate::None()
