@@ -35,6 +35,15 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw();
+	/// <summary>
+	/// リセット
+	/// </summary>
+	void Reset();
+	/// <summary>
+	/// 死亡フラグ取得
+	/// </summary>
+	/// <returns></returns>
+	bool GetDeadFlag() { return isDead; }
 private:
 	/// <summary>
 	/// 方向チェンジ

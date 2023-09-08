@@ -46,7 +46,12 @@ void GameScene::Update()
 		BaseScene* scene = new ResultScene();
 		sceneManager_->SetNextScene(scene);
 	}
-
+#ifdef _DEBUG
+	if (Input::Get()->KeybordTrigger(DIK_R))
+	{
+		player->Reset();
+	}
+# endif
 	player->Update(plate.get());
 	plate->Update();
 }
@@ -58,6 +63,11 @@ void GameScene::Draw()
 	plate->Draw();
 
 	DebugText::Get()->Print(10, 10, 4, "GameScene");
+
+	if (player->GetDeadFlag() == true)
+	{
+		DebugText::Get()->Print(400, 60, 4, "GameOver");
+	}
 }
 
 void GameScene::ShadowDraw()
