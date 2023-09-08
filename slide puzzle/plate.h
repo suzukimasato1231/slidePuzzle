@@ -1,6 +1,11 @@
 #pragma once
 #include<Object.h>
 #include <array>
+#include <iostream>
+#include <algorithm>
+
+#include"Easing.h"
+
 //パネルの種類
 enum PanelStatus
 {
@@ -47,6 +52,8 @@ public:
 
 	void SetKeyFlag(bool num) { keyFlag_ = num; }
 
+	void AddSetSelectBlockNumber(int num);
+
 private:
 
 	void None();
@@ -87,8 +94,14 @@ private:
 	// ステージの位置の配列
 	std::vector<Vec3> seaveStageBlockPosition_;
 	// 動かすブロックの番号
-	std::vector<int> moveBlockNumber;
+	std::vector<int> moveBlockNumber_;
 	// 空のブロックの番号
-	std::vector<int> nullBlockNumber;
+	std::vector<int> nullBlockNumber_;
+	//
+	int selectionBlockNumber_ = 0;
+	// 選択しているブロックの位置
+	Vec3 selectionBlockPosition_ = {};
+	//
+	std::unique_ptr<EaseData> easeData_;
 };
 

@@ -93,13 +93,19 @@ void Plate::Draw()
 	Object::Draw(container, Vec3(), Vec3(3.0f, 3.0f, 3.0f), Vec3(0.0f, 90.0f, 0.0f));
 }
 
+void Plate::AddSetSelectBlockNumber(int num)
+{
+	selectionBlockNumber_ += num;
+	selectionBlockNumber_ = std::clamp(selectionBlockNumber_, 0, static_cast<int>(seaveStageBlockPosition_.size() - 1));
+}
+
 void Plate::None()
 {
 	if (keyFlag_)
 	{
 		NullStageBlockNumber();
 
-		size_t count = 0;
+		int count = 0;
 		bool flag = false;
 		Vec3 tempPos = {};
 		for (int i = 0; i < blockData_.position.size(); i++)
@@ -108,7 +114,7 @@ void Plate::None()
 				blockData_.position[i].y == tempPos.y &&
 				blockData_.position[i].z == tempPos.z)
 			{
-				//blockPhase_.push_back(count);
+				moveBlockNumber_.push_back(count);
 				flag = true;
 				break;
 			}
@@ -127,15 +133,15 @@ void Plate::None()
 void Plate::BeforeMove()
 {
 	bool flag = false;
-	size_t count = static_cast<size_t>(GetStageBlockNumber(static_cast<int>(moveBlockNumber[0])));
+	size_t count = static_cast<size_t>(GetStageBlockNumber(static_cast<int>(moveBlockNumber_[0])));
 	int number = 0;
 	for (int i = 0; i < 4; i++)
 	{
-		if (count == nullBlockNumber[0])
+		if (count == nullBlockNumber_[0])
 		{
 			flag = true;
-			moveBlockNumber.push_back(GetSaveBlockNumber(GetStageBlockNumber(static_cast<int>(moveBlockNumber[0])) - number));
-			nullBlockNumber.push_back(nullBlockNumber[0] + number);
+			moveBlockNumber_.push_back(GetSaveBlockNumber(GetStageBlockNumber(static_cast<int>(moveBlockNumber_[0])) - number));
+			nullBlockNumber_.push_back(nullBlockNumber_[0] + number);
 		}
 
 		if (count == 0 ||
@@ -156,15 +162,15 @@ void Plate::BeforeMove()
 	if (!flag)
 	{
 		number = 0;
-		count = static_cast<size_t>(GetStageBlockNumber(static_cast<int>(moveBlockNumber[0])));
+		count = static_cast<size_t>(GetStageBlockNumber(static_cast<int>(moveBlockNumber_[0])));
 		for (int i = 0; i < 4; i++)
 		{
-			if (count == nullBlockNumber[0])
+			if (count == nullBlockNumber_[0])
 			{
 				flag = true;
 
-				moveBlockNumber.push_back(GetSaveBlockNumber(GetStageBlockNumber(static_cast<int>(moveBlockNumber[0])) + number));
-				nullBlockNumber.push_back(nullBlockNumber[0] - number);
+				moveBlockNumber_.push_back(GetSaveBlockNumber(GetStageBlockNumber(static_cast<int>(moveBlockNumber_[0])) + number));
+				nullBlockNumber_.push_back(nullBlockNumber_[0] - number);
 			}
 
 			if (count == 2 ||
@@ -186,14 +192,14 @@ void Plate::BeforeMove()
 	if (!flag)
 	{
 		number = 0;
-		count = static_cast<size_t>(GetStageBlockNumber(static_cast<int>(moveBlockNumber[0])));
+		count = static_cast<size_t>(GetStageBlockNumber(static_cast<int>(moveBlockNumber_[0])));
 		for (int i = 0; i < 3; i++)
 		{
-			if (count == nullBlockNumber[0])
+			if (count == nullBlockNumber_[0])
 			{
 				flag = true;
-				moveBlockNumber.push_back(GetSaveBlockNumber(GetStageBlockNumber(static_cast<int>(moveBlockNumber[0])) + number * 3));
-				nullBlockNumber.push_back(GetSaveBlockNumber(static_cast<int>(moveBlockNumber[0])) + (number * 3));
+				moveBlockNumber_.push_back(GetSaveBlockNumber(GetStageBlockNumber(static_cast<int>(moveBlockNumber_[0])) + number * 3));
+				nullBlockNumber_.push_back(GetSaveBlockNumber(static_cast<int>(moveBlockNumber_[0])) + (number * 3));
 			}
 
 			if (i != 0)
@@ -207,14 +213,14 @@ void Plate::BeforeMove()
 	if (!flag)
 	{
 		number = 0;
-		count = static_cast<size_t>(GetStageBlockNumber(static_cast<int>(moveBlockNumber[0])));
+		count = static_cast<size_t>(GetStageBlockNumber(static_cast<int>(moveBlockNumber_[0])));
 		for (int i = 0; i < 3; i++)
 		{
-			if (count == nullBlockNumber[0])
+			if (count == nullBlockNumber_[0])
 			{
 				flag = true;
-				moveBlockNumber.push_back(GetSaveBlockNumber(GetStageBlockNumber(static_cast<int>(moveBlockNumber[0])) - number * 3));
-				nullBlockNumber.push_back(GetSaveBlockNumber(static_cast<int>(moveBlockNumber[0])) - (number * 3));
+				moveBlockNumber_.push_back(GetSaveBlockNumber(GetStageBlockNumber(static_cast<int>(moveBlockNumber_[0])) - number * 3));
+				nullBlockNumber_.push_back(GetSaveBlockNumber(static_cast<int>(moveBlockNumber_[0])) - (number * 3));
 			}
 
 			if (i != 0)
@@ -229,8 +235,8 @@ void Plate::BeforeMove()
 	if (!flag)
 	{
 		phase_ = 0;
-		moveBlockNumber.clear();
-		nullBlockNumber.clear();
+		moveBlockNumber_.clear();
+		nullBlockNumber_.clear();
 		return;
 	}
 
@@ -239,26 +245,38 @@ void Plate::BeforeMove()
 
 void Plate::Move()
 {
-	size_t count = nullBlockNumber.size() - 1;
-	for (int i = 0; i < moveBlockNumber.size(); i++)
+	size_t count = nullBlockNumber_.size() - 1;
+	for (int i = 0; i < moveBlockNumber_.size(); i++)
 	{
-		//blockData_.position[moveBlockNumber[i]]->SetPosition(Ease::Action(EaseType::Out, EaseFunctionType::Quint, stageBlock_[moveBlockNumber[i]]->GetPosition(), savePosition_[nullBlockNumber[count - i]], blockEaseData_->GetTimeRate()));
+		blockData_.position[moveBlockNumber_[i]] = Easing::easeOut(blockData_.position[moveBlockNumber_[i]], seaveStageBlockPosition_[nullBlockNumber_[count - i]], easeData_->GetTimeRate());
 	}
 
 
-	/*if (blockEaseData_->GetEndFlag())
+	if (easeData_->GetEndFlag())
 	{
-		blockEaseData_->Reset();
-		moveBlockNumber.clear();
-		nullBlockNumber.clear();
+		easeData_->Reset();
+		moveBlockNumber_.clear();
+		nullBlockNumber_.clear();
 		phase_ = 0;
-	}*/
+	}
 
-	//blockEaseData_->Update();
+	easeData_->Update();
 }
 
 void Plate::Selection()
 {
+	Vec3 tempPos = seaveStageBlockPosition_[selectionBlockNumber_];
+
+	selectionBlockPosition_ = tempPos;
+	//selectionBlockPosition_ = (Ease::Action(EaseType::Out, EaseFunctionType::Quint, block_->GetPosition(), tempPos, easeData_->GetTimeRate()));
+
+	if (easeData_->GetEndFlag())
+	{
+		easeData_->Reset();
+		phase_ = 0;
+	}
+
+	easeData_->Update();
 }
 
 void Plate::NullStageBlockNumber()
@@ -279,7 +297,7 @@ void Plate::NullStageBlockNumber()
 
 		if (!flag)
 		{
-			nullBlockNumber.push_back(i);
+			nullBlockNumber_.push_back(i);
 			break;
 		}
 	}
