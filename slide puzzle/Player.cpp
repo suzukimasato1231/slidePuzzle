@@ -34,10 +34,27 @@ void Player::Draw()
 	Object::Draw(pObject, position, Vec3(1.0f, 1.0f, 1.0f), rotation);
 }
 
+void Player::Reset()
+{
+	const Vec2 basePos = { -9.0f,6.0f };
+	const Vec2 varPos = { 6.1f,-6.1f };
+
+	position = Vec3(basePos.x + 0 * varPos.x, 1.5f, basePos.y + 1 * varPos.y + varPos.y / 2);
+	positionMemory = position;
+	direction = UP;
+	isDead = false;
+	rotation = {};
+	isPosFlag = false, isPosSecondFlag = false;
+	isCurFlag = false;
+	plateTime = 0.0f;
+	posEndSecond = {};
+
+}
+
 void Player::DirectChange(Plate* plate)
 {
 	bool hit = false;
-	if (isPosFlag == false && isPosSecondFlag == false)
+	if (isPosFlag == false && isPosSecondFlag == false && isDead == false)
 	{
 		if (direction == UP)
 		{
@@ -74,11 +91,19 @@ void Player::DirectChange(Plate* plate)
 					LineInit();
 					TurnLeft();
 					TurnRight();
+					if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == UP || direction == DOWN))
+					{
+						isDead = true;
+					}
 					break;
 				case HEIGHTSTRAIGHTLINE://縦直線
 					LineInit();
 					TurnUp();
 					TurnDown();
+					if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == LEFT || direction == RIGHT))
+					{
+						isDead = true;
+					}
 					break;
 				case CROSS:            //十字
 					LineInit();
@@ -91,21 +116,37 @@ void Player::DirectChange(Plate* plate)
 					TurnInit();
 					TurnDownLeft();
 					TurnRightUp();
+					if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == LEFT || direction == UP))
+					{
+						isDead = true;
+					}
 					break;
 				case CUR_LEFTDOWN:	   //カーブ左と下
 					TurnInit();
 					TurnRightDown();
 					TurnUpLeft();
+					if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == LEFT || direction == DOWN))
+					{
+						isDead = true;
+					}
 					break;
 				case CUR_RIGHTUP:      //カーブ右と上
 					TurnInit();
 					TurnLeftUp();
 					TurnDownRight();
+					if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == RIGHT || direction == UP))
+					{
+						isDead = true;
+					}
 					break;
 				case CUR_RIGHTDOWN:    //カーブ右と下
 					TurnInit();
 					TurnLeftDown();
 					TurnUpRight();
+					if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == RIGHT || direction == DOWN))
+					{
+						isDead = true;
+					}
 					break;
 				case DCUR_LEFTUP_RIGHTDOWN://ダブルカーブ左と上＆右と下
 					TurnInit();
