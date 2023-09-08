@@ -44,6 +44,11 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	bool GetDeadFlag() { return isDead; }
+	/// <summary>
+	/// クリスタル獲得数
+	/// </summary>
+	/// <returns></returns>
+	int GetCrstal() { return crstalNum; }
 private:
 	/// <summary>
 	/// 方向チェンジ
@@ -53,6 +58,10 @@ private:
 	/// プレイヤー移動
 	/// </summary>
 	void Move();
+	/// <summary>
+	/// クリスタル獲得
+	/// </summary>
+	void CrstalGet(Plate* plate);
 	/// <summary>
 	/// カーブ初期化
 	/// </summary>
@@ -124,7 +133,12 @@ private:
 	bool isDead = false;                        //死んだか
 
 
-	const float turnSpeed = 0.01f;
+	//クリスタル関連
+	int crstalNum = 0;;//獲得した数
+	const float speedPlas = 0.004f;//スピードUP数
+	float turnSpeedMin = 0.01f;//最小スピード数
+	float turnSpeed = 0.01f;//スピード
+
 	float plateTime = 0.0f;
 	//パネル移動用
 	Vec3 posStart = {};

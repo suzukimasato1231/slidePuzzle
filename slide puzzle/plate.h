@@ -20,6 +20,13 @@ enum PanelStatus
 	DCUR_LEFTUP_RIGHTDOWN,//ダブルカーブ左と上＆右と下
 	DCUR_LEFTDOWN_RIGHTUP,//ダブルカーブ左と下＆右と上
 };
+
+enum Crystal
+{
+	NOCRYSTALL,
+	CRYSTALL,
+};
+
 /// <summary>
 /// パネル
 /// </summary>
@@ -30,6 +37,7 @@ public:
 	{
 		std::vector<Vec3> position;
 		std::vector<PanelStatus> blockType;
+		std::vector<Crystal>crytallFlag;
 	};
 
 public:
@@ -54,6 +62,15 @@ public:
 
 	void AddSetSelectBlockNumber(int num);
 
+	void DeleteCrstal(int num);
+
+	size_t GetPanelNum() { return blockData_.blockType.size(); }
+
+	Vec3 GetPanelPos(int i) { return  blockData_.position[i]; }
+
+	PanelStatus GetPanelStatus(int i) { return blockData_.blockType[i]; }
+
+	Crystal GetCrystal(int i) { return blockData_.crytallFlag[i]; }
 private:
 
 	void None();
@@ -76,11 +93,21 @@ private:
 	ObjectData plateDoubleTurn;//ダブルカーブ
 	ObjectData plateLine;      //一直線
 	ObjectData plateSingleTurn;//単一カーブ
+	ObjectData crystallObject;//クリスタル
 
+	//ステージ仮
 	int stage[3][4] = {
 		CUR_RIGHTDOWN,WIDTHSTRAIGHTLINE,WIDTHSTRAIGHTLINE,CUR_LEFTDOWN,
 		 HEIGHTSTRAIGHTLINE,CROSS,NONE,HEIGHTSTRAIGHTLINE,
 		CUR_RIGHTUP,WIDTHSTRAIGHTLINE,WIDTHSTRAIGHTLINE,CUR_LEFTUP,
+	};
+
+	//クリスタル仮
+	int crystal[3][4]
+	{
+		NOCRYSTALL,CRYSTALL,NOCRYSTALL,CRYSTALL,
+		NOCRYSTALL,NOCRYSTALL,NOCRYSTALL,CRYSTALL,
+		NOCRYSTALL,NOCRYSTALL,NOCRYSTALL,NOCRYSTALL,
 	};
 
 	// 関数の管理
