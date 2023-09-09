@@ -70,6 +70,8 @@ private:
 
 	int GetSaveBlockNumber(int num);
 
+	void SetMove();
+
 private:
 	ObjectData container;//3x4の入れ物
 	ObjectData plateCross;//十字のプレート
@@ -97,7 +99,9 @@ private:
 	std::vector<int> moveBlockNumber_;
 	// 空のブロックの番号
 	std::vector<int> nullBlockNumber_;
-	//
+	// 選択しているステージの位置の番号
+	int selectionStageNumber_ = 4;
+	// 選択しているブロックの番号
 	int selectionBlockNumber_ = 0;
 	// 選択しているブロックの位置
 	Vec3 selectionBlockPosition_ = {};
