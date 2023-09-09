@@ -56,7 +56,6 @@ public:
 	//描画
 	void Draw();
 
-	int GetStage(int i, int j) { return stage[j][i]; }
 
 	void SetKeyFlag(bool num) { keyFlag_ = num; }
 
@@ -71,6 +70,7 @@ public:
 	PanelStatus GetPanelStatus(int i) { return blockData_.blockType[i]; }
 
 	Crystal GetCrystal(int i) { return blockData_.crytallFlag[i]; }
+
 private:
 
 	void None();
@@ -94,21 +94,6 @@ private:
 	ObjectData plateLine;      //一直線
 	ObjectData plateSingleTurn;//単一カーブ
 	ObjectData crystallObject;//クリスタル
-
-	//ステージ仮
-	int stage[3][4] = {
-		CUR_RIGHTDOWN,WIDTHSTRAIGHTLINE,WIDTHSTRAIGHTLINE,CUR_LEFTDOWN,
-		 HEIGHTSTRAIGHTLINE,CROSS,NONE,HEIGHTSTRAIGHTLINE,
-		CUR_RIGHTUP,WIDTHSTRAIGHTLINE,WIDTHSTRAIGHTLINE,CUR_LEFTUP,
-	};
-
-	//クリスタル仮
-	int crystal[3][4]
-	{
-		NOCRYSTALL,CRYSTALL,NOCRYSTALL,CRYSTALL,
-		NOCRYSTALL,NOCRYSTALL,NOCRYSTALL,CRYSTALL,
-		NOCRYSTALL,NOCRYSTALL,NOCRYSTALL,NOCRYSTALL,
-	};
 
 	// 関数の管理
 	std::vector<std::function<void()>> func_;

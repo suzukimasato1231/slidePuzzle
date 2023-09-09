@@ -1,5 +1,6 @@
 #include "Plate.h"
 #include<Shape.h>
+#include<LoadCSV.h>
 Plate::Plate()
 {
 }
@@ -20,9 +21,24 @@ void Plate::Init()
 	const Vec3 basePos = { -9.0f,-0.2f,6.0f };
 	const Vec2 varPos = { 6.1f,-6.1f };
 
-	for (int j = 0; j < 3; j++)
+
+	//ここからステージロード
+	static char* filePath = nullptr;
+	static char* crystalPath = nullptr;
+	int stage[20][20] = {}, crystal[20][20] = {};
+	int stageWidth = 0, stageHeight = 0;//ステージ最大
+
+	//ステージごとにロード
+	filePath = (char*)"./Resources/stage/stage1.csv";
+	crystalPath = (char*)"./Resources/stage/crystal1.csv";
+
+
+	LoadSize(stageWidth, stageHeight, filePath);
+	LoadCSV(stage, filePath, stageWidth, stageHeight);
+	LoadCSV(crystal, crystalPath, stageWidth, stageHeight);
+	for (int j = 0; j < stageHeight; j++)
 	{
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < stageWidth; i++)
 		{
 			blockData_.position.push_back(Vec3(basePos.x + i * varPos.x, basePos.y, basePos.z + j * varPos.y));
 			seaveStageBlockPosition_.push_back(Vec3(basePos.x + i * varPos.x, basePos.y, basePos.z + j * varPos.y));
