@@ -16,7 +16,7 @@ void Plate::Init()
 	plateDoubleTurn = Shape::CreateOBJ("plateDoubleTurn", false, "plate/");//ダブルカーブ
 	plateLine = Shape::CreateOBJ("plateLine", false, "plate/");      //一直線
 	plateSingleTurn = Shape::CreateOBJ("plateSingleTurn", false, "plate/");//単一カーブ
-	crystallObject = Shape::CreateOBJ("sphere");
+	crystallObject = Shape::CreateOBJ("crystal");
 
 	const Vec3 basePos = { -9.0f,-0.2f,6.0f };
 	const Vec2 varPos = { 6.1f,-6.1f };
@@ -61,6 +61,8 @@ void Plate::Init()
 void Plate::Update()
 {
 	func_[phase_]();
+
+	CrystalRote();
 }
 
 void Plate::Draw()
@@ -113,7 +115,7 @@ void Plate::Draw()
 		if (blockData_.crytallFlag[i] == CRYSTALL)
 		{
 			Object::Draw(crystallObject, blockData_.position[i],
-				Vec3(1.0f, 1.0f, 1.0f), Vec3(0.0f, 0.0f, 0.0f));
+				Vec3(0.5f, 0.5f, 0.5f), crystalRote);
 		}
 	}
 
@@ -435,5 +437,19 @@ void Plate::SetMove()
 
 			count--;
 		}
+	}
+}
+
+void Plate::CrystalRote()
+{
+
+	crystalRote += crystalRoteSpeed;
+	if (crystalRote.y >= 360.0f)
+	{
+		crystalRote.y -= 360.0f;
+	}
+	else if (crystalRote.y <= -360.0f)
+	{
+		crystalRote.y += 360.0f;
 	}
 }

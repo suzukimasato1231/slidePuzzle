@@ -73,57 +73,58 @@ private:
 	/// <summary>
 	/// ターン左
 	/// </summary>
-	void TurnLeft();
+	void TurnLeft(const Vec2 platePos);
 	/// <summary>
 	/// ターン右
 	/// </summary>
-	void TurnRight();
+	void TurnRight(const Vec2 platePos);
 	/// <summary>
 	/// ターン上
 	/// </summary>
-	void TurnUp();
+	void TurnUp(const Vec2 platePos);
 	/// <summary>
 	/// ターン下
 	/// </summary>
-	void TurnDown();
+	void TurnDown(const Vec2 platePos);
 	/// <summary>
 	/// ターン右から入る左下
 	/// </summary>
-	void TurnLeftDown();
+	void TurnLeftDown(const Vec2 platePos);
 	/// <summary>
 	/// ターン下から入る右上設定
 	/// </summary>
-	void TurnUpRight();
+	void TurnUpRight(const Vec2 platePos);
 	/// <summary>
 	/// ターン左から入る右sita設定
 	/// </summary>
-	void TurnRightDown();
+	void TurnRightDown(const Vec2 platePos);
 	/// <summary>
 	/// ターン下から入る左上設定
 	/// </summary>
-	void TurnUpLeft();
+	void TurnUpLeft(const Vec2 platePos);
 	/// <summary>
 	/// ターン上から入る左下設定
 	/// </summary>
-	void TurnDownLeft();
+	void TurnDownLeft(const Vec2 platePos);
 	/// <summary>
 	/// ターン左から入る右上設定
 	/// </summary>
-	void TurnRightUp();
+	void TurnRightUp(const Vec2 platePos);
 	/// <summary>
 	/// ターン右から入る左上設定
 	/// </summary>
-	void TurnLeftUp();
+	void TurnLeftUp(const Vec2 platePos);
 	/// <summary>
 	/// ターン上から入る右下設定
 	/// </summary>
-	void TurnDownRight();
+	void TurnDownRight(const Vec2 platePos);
 private:
 	ObjectData pObject;                         //プレイヤーオブジェクト
 	Vec3 position = {};                         //位置
 	Vec3 positionMemory = {};
 	Vec3 rotation = {};
 	int direction = UP;                         //進む向き
+	int keepDirection = UP;
 
 	//プレート基礎位置
 	const Vec2 basePos = { -9.0f,6.0f };
