@@ -104,6 +104,8 @@ private:
 	ObjectData plateLine;      //一直線
 	ObjectData plateSingleTurn;//単一カーブ
 	ObjectData crystallObject;//クリスタル
+	ObjectData landmarkObject;
+	TextureData landmarkTex = {};
 	Vec3 crystalRote = {};
 	const Vec3 crystalRoteSpeed = {0.0f,1.0f,0.0f};
 
