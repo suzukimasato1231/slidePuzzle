@@ -61,19 +61,19 @@ void Player::DirectChange(Plate* plate)
 	{
 		if (direction == UP)
 		{
-			colPos.y += 1.0f;
+			colPos.y += 0.1f;
 		}
 		if (direction == DOWN)
 		{
-			colPos.y -= 1.0f;
+			colPos.y -= 0.1f;
 		}
 		if (direction == RIGHT)
 		{
-			colPos.x += 1.0f;
+			colPos.x += 0.1f;
 		}
 		if (direction == LEFT)
 		{
-			colPos.x -= 1.0f;
+			colPos.x -= 0.1f;
 		}
 	}
 	for (int i = 0; i < plate->GetPanelNum(); i++)
@@ -81,7 +81,7 @@ void Player::DirectChange(Plate* plate)
 		//“–‚½‚è”»’è
 		if (Collision::BoxCollision(
 			colPos, Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z),
-			pSize / 2, sSize / 2))
+			pSize / 2, sSize / 2) && isDead == false)
 		{
 			switch (plate->GetPanelStatus(i))
 			{
@@ -194,7 +194,7 @@ void Player::Move()
 		//ˆÚ“®I‚í‚Á‚½‚ç
 		if (plateTime >= 1.0f)
 		{
-			posStartSecond = posEnd;
+			//posStartSecond = posEnd;
 			turnStartSecond = rotation;
 			isPosFlag = false;
 			plateTime = 0.0f;
@@ -242,7 +242,7 @@ void Player::CrstalGet(Plate* plate)
 void Player::TurnInit()
 {
 	if (isPosFlag == true || isPosSecondFlag == true) { return; }
-	posStart = position;
+	//posStart = position;
 	turnStart = rotation;
 	isCurFlag = true;
 	isPosFlag = true, isPosSecondFlag = true;
@@ -268,6 +268,7 @@ void Player::TurnLeft(const Vec2 platePos)
 	{
 		posStart = Vec3(platePos.x + varPos.x / 2 - 0.05f, positionMemory.y, platePos.y);
 		posEnd = Vec3(platePos.x, position.y, platePos.y);
+		posStartSecond = posEnd;
 		posEndSecond = Vec3(platePos.x - varPos.x / 2, position.y, platePos.y);
 		positionMemory = posEndSecond;
 	}
@@ -284,6 +285,7 @@ void Player::TurnRight(const Vec2 platePos)
 	{
 		posStart = Vec3(platePos.x - varPos.x / 2 + 0.05f, positionMemory.y, platePos.y);
 		posEnd = Vec3(platePos.x, position.y, platePos.y);
+		posStartSecond = posEnd;
 		posEndSecond = Vec3(platePos.x + varPos.x / 2, position.y, platePos.y);
 		positionMemory = posEndSecond;
 	}
@@ -298,8 +300,9 @@ void Player::TurnUp(const Vec2 platePos)
 	}
 	if (keepDirection == UP)
 	{
-		posStart = Vec3(platePos.x, positionMemory.y, platePos.y - varPos.y / 2 + 0.05f);
+		posStart = Vec3(platePos.x, positionMemory.y, platePos.y - varPos.y / 2 + 0.01f);
 		posEnd = Vec3(platePos.x, position.y, platePos.y);
+		posStartSecond = posEnd;
 		posEndSecond = Vec3(platePos.x, position.y, platePos.y + varPos.y / 2);
 		positionMemory = posEndSecond;
 	}
@@ -314,8 +317,9 @@ void Player::TurnDown(const Vec2 platePos)
 	}
 	if (keepDirection == DOWN)
 	{
-		posStart = Vec3(platePos.x, positionMemory.y, platePos.y + varPos.y / 2 - 0.05f);
+		posStart = Vec3(platePos.x, positionMemory.y, platePos.y + varPos.y / 2 - 0.01f);
 		posEnd = Vec3(platePos.x, position.y, platePos.y);
+		posStartSecond = posEnd;
 		posEndSecond = Vec3(platePos.x, position.y, platePos.y - varPos.y / 2);
 		positionMemory = posEndSecond;
 	}
@@ -333,8 +337,9 @@ void Player::TurnLeftDown(const Vec2 platePos)
 	}
 	if (keepDirection == LEFT)
 	{
-		posStart = Vec3(platePos.x + varPos.x / 2 - 0.05f, positionMemory.y, platePos.y);
+		posStart = Vec3(platePos.x + varPos.x / 2 - 0.01f, positionMemory.y, platePos.y);
 		posEnd = Vec3(platePos.x + varPos.x / 4, position.y, platePos.y - varPos.y / 8);
+		posStartSecond = posEnd;
 		posEndSecond = Vec3(platePos.x, position.y, platePos.y - varPos.y / 2);
 		positionMemory = posEndSecond;
 	}
@@ -352,8 +357,9 @@ void Player::TurnUpRight(const Vec2 platePos)
 	}
 	if (keepDirection == UP)
 	{
-		posStart = Vec3(platePos.x, positionMemory.y, platePos.y - varPos.y / 2 + 0.05f);
+		posStart = Vec3(platePos.x, positionMemory.y, platePos.y - varPos.y / 2 + 0.01f);
 		posEnd = Vec3(platePos.x + varPos.x / 8, position.y, platePos.y - varPos.y / 4);
+		posStartSecond = posEnd;
 		posEndSecond = Vec3(platePos.x + varPos.x / 2, position.y, platePos.y);
 		positionMemory = posEndSecond;
 	}
@@ -371,8 +377,9 @@ void Player::TurnRightDown(const Vec2 platePos)
 	}
 	if (keepDirection == RIGHT)
 	{
-		posStart = Vec3(platePos.x - varPos.x / 2 + 0.05f, positionMemory.y, platePos.y);
+		posStart = Vec3(platePos.x - varPos.x / 2 + 0.01f, positionMemory.y, platePos.y);
 		posEnd = Vec3(platePos.x - varPos.x / 4, position.y, platePos.y - varPos.y / 8);
+		posStartSecond = posEnd;
 		posEndSecond = Vec3(platePos.x, position.y, platePos.y - varPos.y / 2);
 		positionMemory = posEndSecond;
 	}
@@ -391,8 +398,9 @@ void Player::TurnUpLeft(const Vec2 platePos)
 	}
 	if (keepDirection == UP)
 	{
-		posStart = Vec3(platePos.x, positionMemory.y, platePos.y - varPos.y / 2 + 0.05f);
+		posStart = Vec3(platePos.x, positionMemory.y, platePos.y - varPos.y / 2 + 0.01f);
 		posEnd = Vec3(platePos.x - varPos.x / 8, position.y, platePos.y - varPos.y / 4);
+		posStartSecond = posEnd;
 		posEndSecond = Vec3(platePos.x - varPos.x / 2, position.y, platePos.y);
 		positionMemory = posEndSecond;
 	}
@@ -410,8 +418,9 @@ void Player::TurnDownLeft(const Vec2 platePos)
 	}
 	if (keepDirection == DOWN)
 	{
-		posStart = Vec3(platePos.x, positionMemory.y, platePos.y + varPos.y / 2 - 0.05f);
+		posStart = Vec3(platePos.x, positionMemory.y, platePos.y + varPos.y / 2 - 0.01f);
 		posEnd = Vec3(platePos.x - varPos.x / 8, position.y, platePos.y + varPos.y / 4);
+		posStartSecond = posEnd;
 		posEndSecond = Vec3(platePos.x - varPos.x / 2, position.y, platePos.y);
 		positionMemory = posEndSecond;
 	}
@@ -429,8 +438,9 @@ void Player::TurnRightUp(const Vec2 platePos)
 	}
 	if (keepDirection == RIGHT)
 	{
-		posStart = Vec3(platePos.x - varPos.x / 2 + 0.05f, positionMemory.y, platePos.y);
+		posStart = Vec3(platePos.x - varPos.x / 2 + 0.01f, positionMemory.y, platePos.y);
 		posEnd = Vec3(platePos.x - varPos.x / 4, position.y, platePos.y + varPos.y / 8);
+		posStartSecond = posEnd;
 		posEndSecond = Vec3(platePos.x, position.y, platePos.y + varPos.y / 2);
 		positionMemory = posEndSecond;
 	}
@@ -448,8 +458,9 @@ void Player::TurnLeftUp(const Vec2 platePos)
 	}
 	if (keepDirection == LEFT)
 	{
-		posStart = Vec3(platePos.x + varPos.x / 2 - 0.05f, positionMemory.y, platePos.y);
+		posStart = Vec3(platePos.x + varPos.x / 2 - 0.01f, positionMemory.y, platePos.y);
 		posEnd = Vec3(platePos.x + varPos.x / 4, position.y, platePos.y + varPos.y / 8);
+		posStartSecond = posEnd;
 		posEndSecond = Vec3(platePos.x, position.y, platePos.y + varPos.y / 2);
 		positionMemory = posEndSecond;
 	}
@@ -467,8 +478,9 @@ void Player::TurnDownRight(const Vec2 platePos)
 	}
 	if (keepDirection == DOWN)
 	{
-		posStart = Vec3(platePos.x, positionMemory.y, platePos.y + varPos.y / 2 - 0.05f);
+		posStart = Vec3(platePos.x, positionMemory.y, platePos.y + varPos.y / 2 - 0.01f);
 		posEnd = Vec3(platePos.x + varPos.x / 8, position.y, platePos.y + varPos.y / 4);
+		posStartSecond = posEnd;
 		posEndSecond = Vec3(platePos.x + varPos.x / 2, position.y, platePos.y);
 		positionMemory = posEndSecond;
 	}
