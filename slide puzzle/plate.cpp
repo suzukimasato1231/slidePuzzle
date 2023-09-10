@@ -144,7 +144,7 @@ void Plate::AddSetSelectBlockNumber(int num)
 
 	if (SelectionBlockCount())
 	{
-		phase_ = 3;
+		//phase_ = 3;
 	}
 }
 
