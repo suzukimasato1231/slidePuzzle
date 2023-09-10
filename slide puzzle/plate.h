@@ -89,6 +89,8 @@ private:
 
 	void SetMove();
 
+	void CrystalRote();
+
 private:
 	ObjectData container;//3x4の入れ物
 	ObjectData plateCross;//十字のプレート
@@ -96,6 +98,8 @@ private:
 	ObjectData plateLine;      //一直線
 	ObjectData plateSingleTurn;//単一カーブ
 	ObjectData crystallObject;//クリスタル
+	Vec3 crystalRote = {};
+	const Vec3 crystalRoteSpeed = {0.0f,1.0f,0.0f};
 
 	// 関数の管理
 	std::vector<std::function<void()>> func_;
