@@ -51,5 +51,9 @@ private://’è‹`
 	SpriteData back;
 
 	SpriteData titleGraph;
-	bool titleFlag = true;
+	SpriteData startGraph;
+	int scene = 0;
+
+	SpriteData gameoverGraph;
+
 };

@@ -40,15 +40,21 @@ void GameScene::Init()
 
 	//オブジェクト生成
 	titleGraph = Sprite::Get()->SpriteCreate(L"Resources/title.png");
+	startGraph = Sprite::Get()->SpriteCreate(L"Resources/start.png");
+	gameoverGraph = Sprite::Get()->SpriteCreate(L"Resources/gameover.png");
 }
 
 void GameScene::Update()
 {
 	//ライト更新
 	lightGroup->Update();
-	if (titleFlag)
+	if (scene == 0)
 	{
-		if (Input::Get()->KeybordTrigger(DIK_SPACE)) { titleFlag = false; }
+		if (Input::Get()->KeybordTrigger(DIK_SPACE)) { scene = 1; }
+	}
+	else if (scene == 1)
+	{
+		if (Input::Get()->KeybordTrigger(DIK_SPACE)) { scene = 2; }
 	}
 	else
 	{
@@ -84,16 +90,20 @@ void GameScene::Draw()
 	plate->Draw();
 
 	player->ScoreDraw();
-#ifdef _DEBUG
+
 	if (player->GetDeadFlag() == true)
 	{
-		DebugText::Get()->Print(400, 60, 4, "GameOver");
+		Sprite::Get()->Draw(gameoverGraph, Vec2(), static_cast<float>(window_width), static_cast<float>(window_height));
 	}
-# endif
 
-	if (titleFlag == true)
+
+	if (scene==0)
 	{
 		Sprite::Get()->Draw(titleGraph, Vec2(), static_cast<float>(window_width), static_cast<float>(window_height));
+	}
+	else if (scene == 1)
+	{
+		Sprite::Get()->Draw(startGraph, Vec2(), static_cast<float>(window_width), static_cast<float>(window_height));
 	}
 }
 
