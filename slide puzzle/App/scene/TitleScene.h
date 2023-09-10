@@ -44,10 +44,8 @@ private:
 	std::unique_ptr<LightGroup>lightGroup;
 private://’è‹`
 
+	SpriteData titleGraph;
 
-	ObjectData tortoise;
-
-	SpriteData ui;
 };
 
 

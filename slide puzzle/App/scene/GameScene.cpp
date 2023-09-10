@@ -35,46 +35,65 @@ void GameScene::Init()
 	player->Init();
 	plate = std::make_unique<Plate>();
 	plate->Init();
+
+	back = Sprite::Get()->SpriteCreate(L"Resources/back.png");
+
+	//オブジェクト生成
+	titleGraph = Sprite::Get()->SpriteCreate(L"Resources/title.png");
 }
 
 void GameScene::Update()
 {
 	//ライト更新
 	lightGroup->Update();
-	/*if (Input::Get()->KeybordTrigger(DIK_SPACE) || Input::Get()->ControllerDown(ButtonA))
+	if (titleFlag)
 	{
-		BaseScene* scene = new ResultScene();
-		sceneManager_->SetNextScene(scene);
-	}*/
+		if (Input::Get()->KeybordTrigger(DIK_SPACE)) { titleFlag = false; }
+	}
+	else
+	{
+		/*if (Input::Get()->KeybordTrigger(DIK_SPACE) || Input::Get()->ControllerDown(ButtonA))
+		{
+			BaseScene* scene = new ResultScene();
+			sceneManager_->SetNextScene(scene);
+		}*/
 
-	if (Input::Get()->KeybordTrigger(DIK_SPACE)) { plate->SetKeyFlag(true); }
-	else if (Input::Get()->KeybordTrigger(DIK_UP)) { plate->AddSetSelectBlockNumber(-4); }
-	else if (Input::Get()->KeybordTrigger(DIK_DOWN)) { plate->AddSetSelectBlockNumber(4); }
-	else if (Input::Get()->KeybordTrigger(DIK_LEFT)) { plate->AddSetSelectBlockNumber(-1); }
-	else if (Input::Get()->KeybordTrigger(DIK_RIGHT)) { plate->AddSetSelectBlockNumber(1); }
+		if (Input::Get()->KeybordTrigger(DIK_SPACE)) { plate->SetKeyFlag(true); }
+		else if (Input::Get()->KeybordTrigger(DIK_UP)) { plate->AddSetSelectBlockNumber(-4); }
+		else if (Input::Get()->KeybordTrigger(DIK_DOWN)) { plate->AddSetSelectBlockNumber(4); }
+		else if (Input::Get()->KeybordTrigger(DIK_LEFT)) { plate->AddSetSelectBlockNumber(-1); }
+		else if (Input::Get()->KeybordTrigger(DIK_RIGHT)) { plate->AddSetSelectBlockNumber(1); }
 
 
 #ifdef _DEBUG
-	if (Input::Get()->KeybordTrigger(DIK_R))
-	{
-		player->Reset();
-	}
+		if (Input::Get()->KeybordTrigger(DIK_R))
+		{
+			player->Reset();
+		}
 # endif
-	player->Update(plate.get());
-	plate->Update();
+		player->Update(plate.get());
+		plate->Update();
+	}
 }
 
 void GameScene::Draw()
 {
+	Sprite::Get()->Draw(back, Vec2(), static_cast<float>(window_width), static_cast<float>(window_height));
 
 	player->Draw();
 	plate->Draw();
 
-	DebugText::Get()->Print(10, 10, 4, "GameScene");
-
+	player->ScoreDraw();
+#ifdef _DEBUG
 	if (player->GetDeadFlag() == true)
 	{
 		DebugText::Get()->Print(400, 60, 4, "GameOver");
+	}
+# endif
+
+	if (titleFlag == true)
+	{
+		Sprite::Get()->Draw(titleGraph, Vec2(), static_cast<float>(window_width), static_cast<float>(window_height));
 	}
 }
 

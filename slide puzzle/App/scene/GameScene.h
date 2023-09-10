@@ -47,4 +47,9 @@ private://’è‹`
 	
 	std::unique_ptr<Player>player;
 	std::unique_ptr<Plate>plate;
+
+	SpriteData back;
+
+	SpriteData titleGraph;
+	bool titleFlag = true;
 };
