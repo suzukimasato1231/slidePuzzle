@@ -5,7 +5,7 @@
 #include"Shape.h"
 #include"Input.h"
 #include"Texture.h"
-#include"StageSelect.h"
+#include"GameScene.h"
 #include"SceneManager.h"
 TitleScene::TitleScene()
 {}
@@ -31,10 +31,7 @@ void TitleScene::Init()
 	Object::SetLight(lightGroup.get());
 
 
-	//オブジェクト生成
-	tortoise = Shape::CreateOBJ("sphere");
-	//スプライト作成
-	ui = Sprite::Get()->SpriteCreate(L"Resources/gutitubo.jpeg");
+	
 
 }
 
@@ -44,22 +41,13 @@ void TitleScene::Update()
 
 	if (Input::Get()->KeybordTrigger(DIK_SPACE) || Input::Get()->ControllerDown(ButtonA))
 	{
-		BaseScene* scene = new StageSelect();
+		BaseScene* scene = new GameScene();
 		sceneManager_->SetNextScene(scene);
 	}
 }
 
 void TitleScene::Draw()
 {
-
-	Vec3 position = {}, scale = { 1.0f,1.0f,1.0f }, angle = {};
-	//オブジェクト表示
-	Object::Draw(tortoise, position, scale, angle);
-
-	Vec2 uiPos = { 200.0f,150.0f };
-	Sprite::Get()->Draw(ui, uiPos, 100.0f, 50.0f);
-
-	DebugText::Get()->Print(10, 10, 4, "Title");
 }
 
 void TitleScene::ShadowDraw()

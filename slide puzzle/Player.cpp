@@ -15,6 +15,18 @@ void Player::Init()
 {
 	pObject = Shape::CreateOBJ("car");
 
+
+	numberGraph[0] = Sprite::Get()->SpriteCreate(L"Resources/number/0.png");
+	numberGraph[1] = Sprite::Get()->SpriteCreate(L"Resources/number/1.png");
+	numberGraph[2] = Sprite::Get()->SpriteCreate(L"Resources/number/2.png");
+	numberGraph[3] = Sprite::Get()->SpriteCreate(L"Resources/number/3.png");
+	numberGraph[4] = Sprite::Get()->SpriteCreate(L"Resources/number/4.png");
+	numberGraph[5] = Sprite::Get()->SpriteCreate(L"Resources/number/5.png");
+	numberGraph[6] = Sprite::Get()->SpriteCreate(L"Resources/number/6.png");
+	numberGraph[7] = Sprite::Get()->SpriteCreate(L"Resources/number/7.png");
+	numberGraph[8] = Sprite::Get()->SpriteCreate(L"Resources/number/8.png");
+	numberGraph[9] = Sprite::Get()->SpriteCreate(L"Resources/number/9.png");
+
 	const Vec2 basePos = { -9.0f,6.0f };
 	const Vec2 varPos = { 6.1f,-6.1f };
 
@@ -35,6 +47,19 @@ void Player::Draw()
 	Object::Draw(pObject, position, Vec3(1.0f, 1.0f, 1.0f), rotation);
 }
 
+void Player::ScoreDraw()
+{
+
+	int pointOne, pointTwo, pointThree;
+	pointOne = pointNum % 10;
+	pointTwo = pointNum % 100 / 10;
+	pointThree = pointNum / 100;
+
+	Sprite::Get()->Draw(numberGraph[pointOne], Vec2(80.0f, 0.0f), 60, 60);
+	Sprite::Get()->Draw(numberGraph[pointTwo], Vec2(40.0f,0.0f), 60, 60);
+	Sprite::Get()->Draw(numberGraph[pointThree], Vec2(), 60, 60);
+}
+
 void Player::Reset()
 {
 	const Vec2 basePos = { -9.0f,6.0f };
@@ -51,6 +76,14 @@ void Player::Reset()
 	plateTime = 0.0f;
 	posStart = {};
 	posEndSecond = {};
+}
+
+void Player::PointUpdate()
+{
+
+
+	pointNum += pointPlas;
+
 }
 
 void Player::DirectChange(Plate* plate)
@@ -231,7 +264,7 @@ void Player::CrstalGet(Plate* plate)
 			Vec2(position.x, position.z), Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z),
 			pSize / 2, crstalSize / 2))
 		{
-			crstalNum++;
+			pointNum += pointPlas;
 			turnSpeed += speedPlas;
 			//ƒNƒŠƒXƒ^ƒ‹‚ªÁ‚¦‚éˆ—
 			plate->DeleteCrstal(i);

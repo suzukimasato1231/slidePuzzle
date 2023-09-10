@@ -1,6 +1,6 @@
 #pragma once
 #include"Object.h"
-
+#include"Sprite.h"
 class Plate;
 /// <summary>
 /// プレイヤークラス
@@ -36,6 +36,10 @@ public:
 	/// </summary>
 	void Draw();
 	/// <summary>
+	/// スコア描画
+	/// </summary>
+	void ScoreDraw();
+	/// <summary>
 	/// リセット
 	/// </summary>
 	void Reset();
@@ -44,12 +48,11 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	bool GetDeadFlag() { return isDead; }
-	/// <summary>
-	/// クリスタル獲得数
-	/// </summary>
-	/// <returns></returns>
-	int GetCrstal() { return crstalNum; }
 private:
+	/// <summary>
+	/// ポイント加算
+	/// </summary>
+	void PointUpdate();
 	/// <summary>
 	/// 方向チェンジ
 	/// </summary>
@@ -134,8 +137,13 @@ private:
 	bool isDead = false;                        //死んだか
 
 
+	//コンボ関連
+	SpriteData numberGraph[10] = {};
+	int pointNum = 0;  //コンボ
+	int pointPlas = 10;//コンボ加算
+
+
 	//クリスタル関連
-	int crstalNum = 0;;//獲得した数
 	const float speedPlas = 0.004f;//スピードUP数
 	float turnSpeedMin = 0.01f;//最小スピード数
 	float turnSpeed = 0.01f;//スピード
