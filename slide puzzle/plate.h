@@ -64,13 +64,19 @@ private:
 
 	void Selection();
 
+	void SelectionMove();
+
 	void NullStageBlockNumber();
 
 	int GetStageBlockNumber(int num);
 
 	int GetSaveBlockNumber(int num);
 
-	void SetMove();
+	bool LeftRight(int count, int number, int num, bool flag);
+
+	bool UpDown(int count, int number, int num, bool flag);
+
+	bool SelectionBlockCount();
 
 private:
 	ObjectData container;//3x4の入れ物
@@ -103,6 +109,8 @@ private:
 	int selectionStageNumber_ = 4;
 	// 選択しているブロックの番号
 	int selectionBlockNumber_ = 0;
+	//
+	int saveSelectionBlockNumber_ = 0;
 	// 選択しているブロックの位置
 	Vec3 selectionBlockPosition_ = {};
 	//
