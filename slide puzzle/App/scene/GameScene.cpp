@@ -59,10 +59,9 @@ void GameScene::Update()
 		else if (Input::Get()->KeybordTrigger(DIK_DOWN)) { plate->AddSetSelectBlockNumber(4); }
 		else if (Input::Get()->KeybordTrigger(DIK_LEFT)) { plate->AddSetSelectBlockNumber(-1); }
 		else if (Input::Get()->KeybordTrigger(DIK_RIGHT)) { plate->AddSetSelectBlockNumber(1); }
-
-		player->Update(plate.get());
 		plate->Update();
 	}
+	player->Update(plate.get());
 }
 
 void GameScene::Draw()

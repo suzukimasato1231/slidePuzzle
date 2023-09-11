@@ -54,6 +54,7 @@ void Player::Update(Plate* plate)
 	Move();
 	CrstalGet(plate);
 	PointUpdate();
+	DeadRotation();
 }
 
 void Player::Draw()
@@ -558,5 +559,17 @@ void Player::TurnDownRight(const Vec2 platePos)
 		posEndSecond = Vec3(platePos.x + varPos.x / 2, position.y, platePos.y);
 		positionMemory = posEndSecond;
 	}
+}
+
+void Player::DeadRotation()
+{
+	if (isDead == false) { return; }
+
+	rotation.z += 3.0f;
+	if (rotation.z >= 180.0f)
+	{
+		rotation.z = 180.0f;
+	}
+
 }
 
