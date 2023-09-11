@@ -1,6 +1,8 @@
 #include "Plate.h"
 #include<Shape.h>
 #include<LoadCSV.h>
+#include<random>
+
 Plate::Plate()
 {
 }
@@ -65,6 +67,8 @@ void Plate::Update()
 	func_[phase_]();
 
 	CrystalRote();
+
+	CrystalCreate();
 }
 
 void Plate::Draw()
@@ -440,5 +444,63 @@ void Plate::CrystalRote()
 	else if (crystalRote.y <= -360.0f)
 	{
 		crystalRote.y += 360.0f;
+	}
+}
+
+void Plate::CrystalCreate()
+{
+	//クリスタルが盤面にあるか探す
+	bool flag = false;
+	for (int i = 0; i < blockData_.blockType.size(); i++)
+	{
+		if (blockData_.crytallFlag[i] == CRYSTALL)
+		{
+			flag = true;
+		}
+	}
+	//クリスタルが無かったらランダムで読み込む
+	if (flag == true) { return; }
+
+	static char* crystalPath = nullptr;
+	int crystal[20][20] = {};
+	int stageWidth = 0, stageHeight = 0;//ステージ最大
+
+
+	//ステージごとにロード
+	std::random_device seed_gen;
+	std::mt19937 engine(seed_gen());
+	std::uniform_int_distribution<>rand100(1, 3);
+
+	if (rand100(engine) == 1)
+	{
+		crystalPath = (char*)"./Resources/stage/crystal1.csv";
+	}
+	else if (rand100(engine) == 2)
+	{
+		crystalPath = (char*)"./Resources/stage/crystal2.csv";
+	}
+	else if (rand100(engine) == 3)
+	{
+		crystalPath = (char*)"./Resources/stage/crystal3.csv";
+	}
+	else
+	{
+		crystalPath = (char*)"./Resources/stage/crystal3.csv";
+	}
+	
+
+	LoadSize(stageWidth, stageHeight, crystalPath);
+	LoadCSV(crystal, crystalPath, stageWidth, stageHeight);
+
+	int width = 0, height = 0;
+	for (int i = 0; i < blockData_.blockType.size(); i++)
+	{
+		blockData_.crytallFlag[i] = static_cast<Crystal>(crystal[height][width]);
+		width++;
+		if (width == stageWidth)
+		{
+			width = 0;
+			height++;
+		}
 	}
 }

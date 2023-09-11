@@ -50,7 +50,7 @@ public:
 	bool GetDeadFlag() { return isDead; }
 private:
 	/// <summary>
-	/// ポイント加算
+	/// コンボ
 	/// </summary>
 	void PointUpdate();
 	/// <summary>
@@ -138,15 +138,28 @@ private:
 
 
 	//コンボ関連
+	SpriteData backSprite;
+	SpriteData comboSprite;
 	SpriteData numberGraph[10] = {};
-	int pointNum = 0;  //コンボ
-	int pointPlas = 10;//コンボ加算
+	const int comboTimeMax = 400;//コンボ最大
+	int comboTime = 0;           //コンボ時間
+	int pointNum = 0;            //コンボ
+	int pointPlas = 10;          //コンボ加算
+
+	//スコア描画
+	ObjectData scoreDraw = {};
+	SpriteData comboGraph[11] = {};
+	Vec3 scorePos = {};
+	bool isScoreDraw = false;
+	const int scoreDrawTimeMax = 50;
+	int scoreDrawTime = 0;
 
 
 	//クリスタル関連
 	const float speedPlas = 0.004f;//スピードUP数
-	float turnSpeedMin = 0.01f;//最小スピード数
-	float turnSpeed = 0.01f;//スピード
+	const float speedMax = 0.1f;  //最大スピード
+	float turnSpeedMin = 0.01f;   //最小スピード数
+	float turnSpeed = 0.01f;      //スピード
 
 	float plateTime = 0.0f;
 	//パネル移動用
