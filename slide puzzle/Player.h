@@ -117,6 +117,10 @@ private:
 	/// ターン上から入る右下設定
 	/// </summary>
 	void TurnDownRight(const Vec2 platePos);
+	/// <summary>
+	/// 死んだときの回転演出
+	/// </summary>
+	void DeadRotation();
 private:
 	ObjectData pObject;                         //プレイヤーオブジェクト
 	Vec3 position = {};                         //位置
