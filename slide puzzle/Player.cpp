@@ -299,7 +299,13 @@ void Player::Move()
 			isCurFlag = false;
 			plateTime = 0.0f;
 			rotation = turnEndSecond;
+			position = posEndSecond;
 		}
+	}
+
+	if (turnSpeed > speedMax)
+	{
+		turnSpeed = speedMax;
 	}
 }
 

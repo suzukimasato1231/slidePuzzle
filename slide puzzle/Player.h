@@ -157,8 +157,9 @@ private:
 
 	//クリスタル関連
 	const float speedPlas = 0.004f;//スピードUP数
-	float turnSpeedMin = 0.01f;//最小スピード数
-	float turnSpeed = 0.01f;//スピード
+	const float speedMax = 0.1f;  //最大スピード
+	float turnSpeedMin = 0.01f;   //最小スピード数
+	float turnSpeed = 0.01f;      //スピード
 
 	float plateTime = 0.0f;
 	//パネル移動用

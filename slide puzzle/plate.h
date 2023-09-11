@@ -97,6 +97,8 @@ private:
 
 	void CrystalRote();
 
+	void CrystalCreate();
+
 private:
 	ObjectData container;//3x4の入れ物
 	ObjectData plateCross;//十字のプレート
