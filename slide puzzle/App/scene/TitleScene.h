@@ -8,6 +8,8 @@
 #include"Sprite.h"
 #include<memory>
 #include"BaseScene.h"
+#include"../slide puzzle/Player.h"
+#include"../slide puzzle/plate.h"
 extern const int window_width;
 extern const int window_height;
 /// <summary>
@@ -45,7 +47,9 @@ private:
 private://’è‹`
 
 	SpriteData titleGraph;
-
+	std::unique_ptr<Player>player;
+	std::unique_ptr<Plate>plate;
+	SpriteData back;
 };
 
 

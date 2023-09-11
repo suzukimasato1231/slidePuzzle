@@ -63,7 +63,7 @@ void SceneManager::Initialize()
 	Audio::Get()->Init();
 	
 	//シーンをタイトルに設定
-	BaseScene* scene = new GameScene();
+	BaseScene* scene = new TitleScene();
 	SetNextScene(scene);
 }
 

@@ -14,19 +14,26 @@ StageSelect::~StageSelect()
 
 void StageSelect::Init()
 {
-
-
-	// ライトグループクラス作成
+	//ライトグループクラス作成
 	lightGroup = std::make_unique<LightGroup>();
 	lightGroup->Initialize();
 	// 3Dオブエクトにライトをセット
 	lightGroup->SetDirLightActive(0, true);
-	lightGroup->SetDirLightDir(0, XMVECTOR{ 0,0,1,0 });
-	lightGroup->SetShadowDir(Vec3(0, 1, -1));
-	
-	Camera::Get()->SetCamera(Vec3{ 0,30,-5 }, Vec3{ 0, -3, 0 }, Vec3{ 0, 1, 0 });
+	lightGroup->SetDirLightDir(0, XMVECTOR{ 0,-1,0,0 });
+	lightGroup->SetShadowDir(Vec3(0, 1, 0));
+
+	Camera::Get()->SetCamera(Vec3{ 0,20,-1 }, Vec3{ 0, -3, 0 }, Vec3{ 0, 1, 0 });
 	FBXObject3d::SetLight(lightGroup.get());
 	Object::SetLight(lightGroup.get());
+
+	player = std::make_unique<Player>();
+	player->Init();
+	plate = std::make_unique<Plate>();
+	plate->Init();
+
+	back = Sprite::Get()->SpriteCreate(L"Resources/back.png");
+	//オブジェクト生成
+	startGraph = Sprite::Get()->SpriteCreate(L"Resources/start.png");
 }
 
 
@@ -45,7 +52,14 @@ void StageSelect::Update()
 
 void StageSelect::Draw()
 {
-	DebugText::Get()->Print(10, 10, 4, "Select");
+	Sprite::Get()->Draw(back, Vec2(), static_cast<float>(window_width), static_cast<float>(window_height));
+
+	player->Draw();
+	plate->Draw();
+
+	player->ScoreDraw();
+
+	Sprite::Get()->Draw(startGraph, Vec2(), static_cast<float>(window_width), static_cast<float>(window_height));
 }
 
 void StageSelect::ShadowDraw()
