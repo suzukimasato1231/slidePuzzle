@@ -40,10 +40,6 @@ public:
 	/// </summary>
 	void ScoreDraw();
 	/// <summary>
-	/// リセット
-	/// </summary>
-	void Reset();
-	/// <summary>
 	/// 死亡フラグ取得
 	/// </summary>
 	/// <returns></returns>
@@ -155,10 +151,10 @@ private:
 	int scoreDrawTime = 0;
 
 
-	//クリスタル関連
+	//クリスタルスピード関連
 	const float speedPlas = 0.004f;//スピードUP数
 	const float speedMax = 0.1f;  //最大スピード
-	float turnSpeedMin = 0.01f;   //最小スピード数
+	const float turnSpeedMin = 0.01f;//最小スピード数
 	float turnSpeed = 0.01f;      //スピード
 
 	float plateTime = 0.0f;

@@ -49,9 +49,6 @@ private://’è‹`
 	std::unique_ptr<Plate>plate;
 
 	SpriteData back;
-
-	SpriteData titleGraph;
-	SpriteData startGraph;
 	int scene = 0;
 
 	SpriteData gameoverGraph;

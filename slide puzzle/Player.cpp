@@ -104,23 +104,6 @@ void Player::ScoreDraw()
 	}
 }
 
-void Player::Reset()
-{
-	const Vec2 basePos = { -9.0f,6.0f };
-	const Vec2 varPos = { 6.1f,-6.1f };
-
-	position = Vec3(basePos.x + 0 * varPos.x, 1.5f, basePos.y + 1 * varPos.y + varPos.y / 2);
-	positionMemory = position;
-	direction = UP;
-	keepDirection = UP;
-	isDead = false;
-	rotation = {};
-	isPosFlag = false, isPosSecondFlag = false;
-	isCurFlag = false;
-	plateTime = 0.0f;
-	posStart = {};
-	posEndSecond = {};
-}
 
 void Player::PointUpdate()
 {

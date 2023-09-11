@@ -6,7 +6,7 @@
 #include"Shape.h"
 #include"StageSelect.h"
 #include"SceneManager.h"
-#include"ResultScene.h"
+#include"TitleScene.h"
 GameScene::GameScene()
 {}
 GameScene::~GameScene()
@@ -39,8 +39,6 @@ void GameScene::Init()
 	back = Sprite::Get()->SpriteCreate(L"Resources/back.png");
 
 	//オブジェクト生成
-	titleGraph = Sprite::Get()->SpriteCreate(L"Resources/title.png");
-	startGraph = Sprite::Get()->SpriteCreate(L"Resources/start.png");
 	gameoverGraph = Sprite::Get()->SpriteCreate(L"Resources/gameover.png");
 }
 
@@ -48,35 +46,20 @@ void GameScene::Update()
 {
 	//ライト更新
 	lightGroup->Update();
-	if (scene == 0)
+
+	if (Input::Get()->KeybordTrigger(DIK_SPACE) && player->GetDeadFlag() == true)
 	{
-		if (Input::Get()->KeybordTrigger(DIK_SPACE)) { scene = 1; }
-	}
-	else if (scene == 1)
-	{
-		if (Input::Get()->KeybordTrigger(DIK_SPACE)) { scene = 2; }
+		BaseScene* scene = new TitleScene();
+		sceneManager_->SetNextScene(scene);
 	}
 	else
 	{
-		/*if (Input::Get()->KeybordTrigger(DIK_SPACE) || Input::Get()->ControllerDown(ButtonA))
-		{
-			BaseScene* scene = new ResultScene();
-			sceneManager_->SetNextScene(scene);
-		}*/
-
 		if (Input::Get()->KeybordTrigger(DIK_SPACE)) { plate->SetKeyFlag(true); }
 		else if (Input::Get()->KeybordTrigger(DIK_UP)) { plate->AddSetSelectBlockNumber(-4); }
 		else if (Input::Get()->KeybordTrigger(DIK_DOWN)) { plate->AddSetSelectBlockNumber(4); }
 		else if (Input::Get()->KeybordTrigger(DIK_LEFT)) { plate->AddSetSelectBlockNumber(-1); }
 		else if (Input::Get()->KeybordTrigger(DIK_RIGHT)) { plate->AddSetSelectBlockNumber(1); }
 
-
-#ifdef _DEBUG
-		if (Input::Get()->KeybordTrigger(DIK_R))
-		{
-			player->Reset();
-		}
-# endif
 		player->Update(plate.get());
 		plate->Update();
 	}
@@ -94,16 +77,6 @@ void GameScene::Draw()
 	if (player->GetDeadFlag() == true)
 	{
 		Sprite::Get()->Draw(gameoverGraph, Vec2(), static_cast<float>(window_width), static_cast<float>(window_height));
-	}
-
-
-	if (scene==0)
-	{
-		Sprite::Get()->Draw(titleGraph, Vec2(), static_cast<float>(window_width), static_cast<float>(window_height));
-	}
-	else if (scene == 1)
-	{
-		Sprite::Get()->Draw(startGraph, Vec2(), static_cast<float>(window_width), static_cast<float>(window_height));
 	}
 }
 
