@@ -19,7 +19,7 @@ void Window::CreateGameWindow()
 	//ウィンドウクラスの設定
 	m_w.cbSize = sizeof(WNDCLASSEX);
 	m_w.lpfnWndProc = (WNDPROC)WindowProce; // ウィンドウプロシージャを設定
-	m_w.lpszClassName = L"ペンギンブレーク"; // ウィンドウクラス名
+	m_w.lpszClassName = L"Raile Slide"; // ウィンドウクラス名
 	m_w.hInstance = GetModuleHandle(nullptr); // ウィンドウハンドル
 	m_w.hCursor = LoadCursor(NULL, IDC_ARROW); // カーソル指定
 
@@ -30,7 +30,7 @@ void Window::CreateGameWindow()
 
 	// ウィンドウオブジェクトの生成
 	m_hwnd = CreateWindow(m_w.lpszClassName, // クラス名
-		L"ペンギンブレーク",         // タイトルバーの文字
+		L"Raile Slide",         // タイトルバーの文字
 		WS_OVERLAPPEDWINDOW,        // 標準的なウィンドウスタイル
 		CW_USEDEFAULT,              // 表示X座標（OSに任せる）
 		CW_USEDEFAULT,              // 表示Y座標（OSに任せる）
