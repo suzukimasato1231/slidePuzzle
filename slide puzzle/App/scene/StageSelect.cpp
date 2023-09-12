@@ -34,32 +34,40 @@ void StageSelect::Init()
 	back = Sprite::Get()->SpriteCreate(L"Resources/back.png");
 	//オブジェクト生成
 	startGraph = Sprite::Get()->SpriteCreate(L"Resources/start.png");
+
+	// シーン遷移の演出の初期化
+	sceneChange_ = std::make_unique<SceneChange>();
 }
 
 
 void StageSelect::Update()
 {
-	
 	//ライト更新
 	lightGroup->Update();
 
-	if (Input::Get()->KeybordTrigger(DIK_SPACE) || Input::Get()->ControllerDown(ButtonA))
+	if ((Input::Get()->KeybordTrigger(DIK_SPACE) || Input::Get()->ControllerDown(ButtonA)) && sceneChange_->GetinEndFlag())
+	{
+		sceneChange_->SceneChangeStart("");
+	}
+
+	if (sceneChange_->GetOutEndFlag())
 	{
 		BaseScene* scene = new GameScene();
 		sceneManager_->SetNextScene(scene);
 	}
+
+	sceneChange_->Update();
 }
 
 void StageSelect::Draw()
 {
 	Sprite::Get()->Draw(back, Vec2(), static_cast<float>(window_width), static_cast<float>(window_height));
 
-	player->Draw();
 	plate->Draw();
 
-	player->ScoreDraw();
-
 	Sprite::Get()->Draw(startGraph, Vec2(), static_cast<float>(window_width), static_cast<float>(window_height));
+
+	sceneChange_->Draw();
 }
 
 void StageSelect::ShadowDraw()
@@ -68,4 +76,6 @@ void StageSelect::ShadowDraw()
 }
 
 void StageSelect::Finalize()
-{}
+{
+	Texture::Get()->Delete();
+}

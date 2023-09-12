@@ -3,6 +3,7 @@
 #include<Collision.h>
 #include"plate.h"
 #include"Easing.h"
+#include<random>
 Player::Player()
 {
 }
@@ -46,6 +47,12 @@ void Player::Init()
 
 	position = Vec3(basePos.x + 0 * varPos.x, 1.5f, basePos.y + 1 * varPos.y + varPos.y / 2);
 	positionMemory = position;
+
+	comboParticle = std::make_unique<ParticleManager>();
+	comboParticle->Initialize();
+
+
+	particleGraph = Texture::Get()->LoadTexture(L"Resources/Paricle/kirakira.png");
 }
 
 void Player::Update(Plate* plate)
@@ -55,6 +62,7 @@ void Player::Update(Plate* plate)
 	CrstalGet(plate);
 	PointUpdate();
 	DeadRotation();
+	comboParticle->UpdateFollow(position);
 }
 
 void Player::Draw()
@@ -65,6 +73,8 @@ void Player::Draw()
 
 void Player::ScoreDraw()
 {
+
+	comboParticle->Draw(particleGraph);
 	//3D
 	if (isScoreDraw == true)
 	{
@@ -109,13 +119,22 @@ void Player::ScoreDraw()
 void Player::PointUpdate()
 {
 	//コンボ
-	if (comboTime > 0) { comboTime--; }
+	if (comboTime > 0)
+	{
+		comboTime--;
+		comboParticle->BombAdd(Vec3(),
+			0.0f, 0.5f, 0.0f,
+			Vec4(0.3f, 0.3f, 0.0f, 0.3f), Vec4(0.0f, 0.0f, 0.0f, 0.0f));
+	}
 	if (comboTime == 0) { pointPlas = 10; }
 	//ポイント
 	if (pointPlas > 100) { pointPlas = 100; }
 	if (pointNum > 99999) { pointNum = 99999; }
 	//スコア
-	if (scoreDrawTime > 0) { scoreDrawTime--; }
+	if (scoreDrawTime > 0)
+	{
+		scoreDrawTime--;
+	}
 	else { isScoreDraw = false; }
 }
 

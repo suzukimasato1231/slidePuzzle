@@ -339,6 +339,7 @@
     <ClInclude Include="Library\Texture\Texture.h" />
     <ClInclude Include="plate.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="SceneChange.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App\scene\BaseScene.cpp" />
@@ -387,6 +388,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="plate.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="SceneChange.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

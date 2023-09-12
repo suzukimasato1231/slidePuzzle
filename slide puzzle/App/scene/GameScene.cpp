@@ -40,28 +40,41 @@ void GameScene::Init()
 
 	//オブジェクト生成
 	gameoverGraph = Sprite::Get()->SpriteCreate(L"Resources/gameover.png");
+
+	// シーン遷移の演出の初期化
+	sceneChange_ = std::make_unique<SceneChange>();
 }
 
 void GameScene::Update()
 {
 	//ライト更新
 	lightGroup->Update();
+	if (sceneChange_->GetinEndFlag())
+	{
+		if (Input::Get()->KeybordTrigger(DIK_SPACE) && player->GetDeadFlag() == true)
+		{
+			sceneChange_->SceneChangeStart("");
+		}
+		else
+		{
+			if (Input::Get()->KeybordTrigger(DIK_SPACE)) { plate->SetKeyFlag(true); }
+			else if (Input::Get()->KeybordTrigger(DIK_UP)) { plate->AddSetSelectBlockNumber(-4); }
+			else if (Input::Get()->KeybordTrigger(DIK_DOWN)) { plate->AddSetSelectBlockNumber(4); }
+			else if (Input::Get()->KeybordTrigger(DIK_LEFT)) { plate->AddSetSelectBlockNumber(-1); }
+			else if (Input::Get()->KeybordTrigger(DIK_RIGHT)) { plate->AddSetSelectBlockNumber(1); }
+		}
 
-	if (Input::Get()->KeybordTrigger(DIK_SPACE) && player->GetDeadFlag() == true)
-	{
-		BaseScene* scene = new TitleScene();
-		sceneManager_->SetNextScene(scene);
-	}
-	else
-	{
-		if (Input::Get()->KeybordTrigger(DIK_SPACE)) { plate->SetKeyFlag(true); }
-		else if (Input::Get()->KeybordTrigger(DIK_UP)) { plate->AddSetSelectBlockNumber(-4); }
-		else if (Input::Get()->KeybordTrigger(DIK_DOWN)) { plate->AddSetSelectBlockNumber(4); }
-		else if (Input::Get()->KeybordTrigger(DIK_LEFT)) { plate->AddSetSelectBlockNumber(-1); }
-		else if (Input::Get()->KeybordTrigger(DIK_RIGHT)) { plate->AddSetSelectBlockNumber(1); }
+		if (sceneChange_->GetOutEndFlag())
+		{
+			BaseScene* scene = new TitleScene();
+			sceneManager_->SetNextScene(scene);
+		}
+
 		plate->Update();
+		player->Update(plate.get());
 	}
-	player->Update(plate.get());
+
+	sceneChange_->Update();
 }
 
 void GameScene::Draw()
@@ -77,6 +90,8 @@ void GameScene::Draw()
 	{
 		Sprite::Get()->Draw(gameoverGraph, Vec2(), static_cast<float>(window_width), static_cast<float>(window_height));
 	}
+
+	sceneChange_->Draw();
 }
 
 void GameScene::ShadowDraw()
@@ -86,6 +101,6 @@ void GameScene::ShadowDraw()
 
 void GameScene::Finalize()
 {
-
+	Texture::Get()->Delete();
 }
 

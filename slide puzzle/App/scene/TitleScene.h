@@ -10,6 +10,7 @@
 #include"BaseScene.h"
 #include"../slide puzzle/Player.h"
 #include"../slide puzzle/plate.h"
+#include"../slide puzzle/SceneChange.h"
 extern const int window_width;
 extern const int window_height;
 /// <summary>
@@ -45,11 +46,11 @@ public:
 private:
 	std::unique_ptr<LightGroup>lightGroup;
 private://定義
-
+	// シーンチェンジ
+	std::unique_ptr<SceneChange> sceneChange_;
 	SpriteData titleGraph;
 	std::unique_ptr<Player>player;
 	std::unique_ptr<Plate>plate;
 	SpriteData back;
 };
-
 

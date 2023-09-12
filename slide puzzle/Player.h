@@ -1,6 +1,8 @@
 #pragma once
 #include"Object.h"
 #include"Sprite.h"
+#include<ParticleManager.h>
+#include<memory>
 class Plate;
 /// <summary>
 /// プレイヤークラス
@@ -141,10 +143,12 @@ private:
 	SpriteData backSprite;
 	SpriteData comboSprite;
 	SpriteData numberGraph[10] = {};
-	const int comboTimeMax = 400;//コンボ最大
+	const int comboTimeMax = 250;//コンボ最大
 	int comboTime = 0;           //コンボ時間
 	int pointNum = 0;            //コンボ
 	int pointPlas = 10;          //コンボ加算
+	std::unique_ptr < ParticleManager> comboParticle = nullptr;
+	TextureData particleGraph = {};
 
 	//スコア描画
 	ObjectData scoreDraw = {};

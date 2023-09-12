@@ -47,14 +47,14 @@ void ParticleManager::PostDraw()
 	ParticleManager::cmdList = nullptr;
 }
 
-void ParticleManager::Add(int life,const Vec3 &position,const Vec3 &velocity,const Vec3 &accel, float start_scale, float end_scale,const Vec4 &start_color,const Vec4 &end_color)
+void ParticleManager::Add(int life, const Vec3& position, const Vec3& velocity, const Vec3& accel, float start_scale, float end_scale, const Vec4& start_color, const Vec4& end_color)
 {
 	//リストに要素を追加
 	particles.emplace_front();
 	//追加した要素の参照
 	Particle& p = particles.front();
 	//値のリセット
-	p.position = position;
+	p.basePos = position;
 	p.velocity = velocity;
 	p.accel = accel;
 	p.num_frame = life;
@@ -64,7 +64,7 @@ void ParticleManager::Add(int life,const Vec3 &position,const Vec3 &velocity,con
 	p.e_color = end_color;
 }
 
-void ParticleManager::BreakBoxAdd(const Vec3 &Pos, float Vel, float start_scale, float end_scale,const Vec4 &start_color,const Vec4 &end_color)
+void ParticleManager::BreakBoxAdd(const Vec3& Pos, float Vel, float start_scale, float end_scale, const Vec4& start_color, const Vec4& end_color)
 {
 	for (int i = 0; i < 20; i++)
 	{
@@ -89,13 +89,12 @@ void ParticleManager::BreakBoxAdd(const Vec3 &Pos, float Vel, float start_scale,
 
 void ParticleManager::BombAdd(const Vec3& Pos, float Vel, float start_scale, float end_scale, const Vec4& start_color, const Vec4& end_color)
 {
-	for (int i = 0; i < 120; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		//X,Y,Z全て{-5.0f,+5.0f}でランダムに分布
-		const float md_pos = 0.5f;
+		const float md_pos = 4.0f;
 		Vec3 pos = Pos;
 		pos.x += (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
-		pos.y += (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
 		pos.z += (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
 		////X,Y,Z全て{-0.05f,+0.05f}でランダムに分布
 		const float md_vel = Vel;
@@ -110,7 +109,7 @@ void ParticleManager::BombAdd(const Vec3& Pos, float Vel, float start_scale, flo
 	}
 }
 
-void ParticleManager::ParticleAdd2(const Vec3 &Pos, const Vec4 &start_color,const Vec4 &end_color)
+void ParticleManager::ParticleAdd2(const Vec3& Pos, const Vec4& start_color, const Vec4& end_color)
 {
 	for (int i = 0; i < 1; i++)
 	{
@@ -130,7 +129,7 @@ void ParticleManager::ParticleAdd2(const Vec3 &Pos, const Vec4 &start_color,cons
 		Vec3 acc{};
 		const float md_acc = 0.001f;
 		acc.y = (float)rand() / RAND_MAX * md_acc;
-			//追加
+		//追加
 		Add(90, pos, vel, acc, 4.0f, 8.0f, start_color, end_color);
 	}
 }
@@ -344,7 +343,75 @@ void ParticleManager::Update()
 	m_constBuff->Unmap(0, nullptr);
 }
 
-void ParticleManager::Draw(TextureData &graph)
+void ParticleManager::UpdateFollow(const Vec3 position)
+{
+	HRESULT result;
+
+	//寿命が尽きたパーティクルを全削除
+	particles.remove_if(
+		[](Particle& x)
+		{
+			return x.frame >= x.num_frame;
+		}
+	);
+
+	//全パーティクル更新
+	for (std::forward_list<Particle>::iterator it = particles.begin();
+		it != particles.end();
+		it++) {
+		//経過フレーム数をカウント
+		it->frame++;
+		//速度に加速度を加算
+		it->velocity = it->velocity + it->accel;
+		////速度による移動
+		it->position = position + it->basePos + it->velocity;
+
+		float f = (float)it->num_frame / it->frame;
+
+		//スケールの線形補間
+		it->scale = (it->e_scale - it->s_scale) / f;
+		it->scale += it->s_scale;
+
+		//色
+		it->color = (it->e_color - it->s_color) / f;
+
+		it->color = it->color + it->s_color;
+
+	}
+
+	//頂点バッファへデータ転送
+	VertexPos* vertMap = nullptr;
+	result = m_vertBuff->Map(0, nullptr, (void**)&vertMap);
+	if (SUCCEEDED(result))
+	{
+		//パーティクル情報を１つずつ反映
+		for (std::forward_list<Particle>::iterator it = particles.begin();
+
+			it != particles.end();
+			it++) {
+
+			//座標
+			vertMap->pos = it->position;
+			vertMap->scale = it->scale;
+			vertMap->color = it->color;
+			//次の頂点へ
+			vertMap++;
+		}
+
+		m_vertBuff->Unmap(0, nullptr);
+	}
+	//ビルボード行列の更新
+	MatBillboardUpdate();
+
+	// 定数バッファへデータ転送
+	ConstBufferData* constMap = nullptr;
+	result = m_constBuff->Map(0, nullptr, (void**)&constMap);
+	constMap->mat = Camera::Get()->GetMatView() * Camera::Get()->GetProjection();	// 行列の合成
+	constMap->matBillboard = matBillboard;
+	m_constBuff->Unmap(0, nullptr);
+}
+
+void ParticleManager::Draw(TextureData& graph)
 {
 	// nullptrチェック
 	assert(device);

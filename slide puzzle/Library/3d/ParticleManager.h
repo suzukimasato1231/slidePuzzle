@@ -37,6 +37,8 @@ public: // サブクラス
 	{
 		//座標
 		Vec3 position = {};
+
+		Vec3 basePos = {};
 		//速度
 		Vec3 velocity = {};
 		//加速度
@@ -139,7 +141,10 @@ public: // メンバ関数
 	/// 毎フレーム処理
 	/// </summary>
 	void Update();
-
+	/// <summary>
+	/// 追従毎フレーム処理
+	/// </summary>
+	void UpdateFollow(const Vec3 position);
 
 	/// <summary>
 	/// 描画

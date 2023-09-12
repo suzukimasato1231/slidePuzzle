@@ -41,29 +41,36 @@ void TitleScene::Init()
 
 	//オブジェクト生成
 	titleGraph = Sprite::Get()->SpriteCreate(L"Resources/title.png");
+
+	// シーン遷移の演出の初期化
+	sceneChange_ = std::make_unique<SceneChange>();
 }
 
 void TitleScene::Update()
 {
 	lightGroup->Update();
 
-	if (Input::Get()->KeybordTrigger(DIK_SPACE) || Input::Get()->ControllerDown(ButtonA))
+	if ((Input::Get()->KeybordTrigger(DIK_SPACE) || Input::Get()->ControllerDown(ButtonA)) && sceneChange_->GetinEndFlag())
+	{
+		sceneChange_->SceneChangeStart("");
+	}
+
+	if (sceneChange_->GetOutEndFlag())
 	{
 		BaseScene* scene = new StageSelect();
 		sceneManager_->SetNextScene(scene);
 	}
+
+	sceneChange_->Update();
 }
 
 void TitleScene::Draw()
 {
 	Sprite::Get()->Draw(back, Vec2(), static_cast<float>(window_width), static_cast<float>(window_height));
 
-	player->Draw();
-	plate->Draw();
-
-	player->ScoreDraw();
-
 	Sprite::Get()->Draw(titleGraph, Vec2(), static_cast<float>(window_width), static_cast<float>(window_height));
+
+	sceneChange_->Draw();
 }
 
 void TitleScene::ShadowDraw()
@@ -73,4 +80,6 @@ void TitleScene::ShadowDraw()
 
 
 void TitleScene::Finalize()
-{}
+{
+	Texture::Get()->Delete();
+}
