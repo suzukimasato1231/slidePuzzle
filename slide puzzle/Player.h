@@ -3,6 +3,7 @@
 #include"Sprite.h"
 #include<ParticleManager.h>
 #include<memory>
+#include<Audio.h>
 class Plate;
 /// <summary>
 /// プレイヤークラス
@@ -123,6 +124,10 @@ private:
 	/// 死んだときの回転演出
 	/// </summary>
 	void DeadRotation();
+	/// <summary>
+	/// 左コントロールで加速
+	/// </summary>
+	void Dash();
 private:
 	ObjectData pObject;                         //プレイヤーオブジェクト
 	Vec3 position = {};                         //位置
@@ -137,7 +142,13 @@ private:
 	Vec2 pSize = { 0.001f,0.001f }, sSize = { 6.1f,6.1f };
 
 	bool isDead = false;                        //死んだか
-
+	//音関連
+	SoundData crashSound;
+	SoundData crystalSound;
+	SoundData runSound;
+	SoundData turboSound;
+	bool turboSoundFlag = false;
+	bool runSoundFlag = false;
 
 	//コンボ関連
 	SpriteData backSprite;
@@ -145,8 +156,8 @@ private:
 	SpriteData numberGraph[10] = {};
 	const int comboTimeMax = 250;//コンボ最大
 	int comboTime = 0;           //コンボ時間
-	int pointNum = 0;            //コンボ
-	int pointPlas = 10;          //コンボ加算
+	int pointNum = 0;            //得点
+	int pointPlas = 10;          //得点加算
 	std::unique_ptr < ParticleManager> comboParticle = nullptr;
 	TextureData particleGraph = {};
 
@@ -160,10 +171,10 @@ private:
 
 
 	//クリスタルスピード関連
-	const float speedPlas = 0.004f;//スピードUP数
-	const float speedMax = 0.1f;  //最大スピード
+	const float speedPlas = 0.0025f;  //スピードUP数
+	const float speedMax = 0.06f;     //最大スピード
 	const float turnSpeedMin = 0.01f;//最小スピード数
-	float turnSpeed = 0.01f;      //スピード
+	float turnSpeed = 0.01f;         //スピード
 
 	float plateTime = 0.0f;
 	//パネル移動用

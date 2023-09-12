@@ -15,10 +15,10 @@ void Audio::Init()
 
 
 }
-Audio *Audio::Create()
+Audio* Audio::Create()
 {
 	// 3Dオブジェクトのインスタンスを生成
-	Audio *audio = new Audio();
+	Audio* audio = new Audio();
 	if (audio == nullptr) {
 		return nullptr;
 	}
@@ -28,7 +28,7 @@ Audio *Audio::Create()
 }
 
 
-SoundData Audio::SoundLoadWave(const char *filename)
+SoundData Audio::SoundLoadWave(const char* filename)
 {
 	//ファイルオープン
 	std::ifstream file;
@@ -38,7 +38,7 @@ SoundData Audio::SoundLoadWave(const char *filename)
 
 	//2
 	RiffHeader riff;
-	file.read((char *)&riff, sizeof(riff));
+	file.read((char*)&riff, sizeof(riff));
 
 	if (strncmp(riff.chunk.id, "RIFF", 4) != 0)
 	{
@@ -53,22 +53,22 @@ SoundData Audio::SoundLoadWave(const char *filename)
 
 	FormatChunk format = {};
 
-	file.read((char *)&format, sizeof(ChunkHeader));
+	file.read((char*)&format, sizeof(ChunkHeader));
 	if (strncmp(format.chunk.id, "fmt", 4) != 0)
 	{
 		//assert(0);
 	}
 
 	assert(format.chunk.size <= sizeof(format.fmt));
-	file.read((char *)&format.fmt, format.chunk.size);
+	file.read((char*)&format.fmt, format.chunk.size);
 
 
 	ChunkHeader data;
-	file.read((char *)&data, sizeof(data));
+	file.read((char*)&data, sizeof(data));
 	if (strncmp(data.id, "JUNK", 4) == 0 || strncmp(data.id, "LIST", 4) == 0)
 	{
 		file.seekg(data.size, std::ios_base::cur);
-		file.read((char *)&data, sizeof(data));
+		file.read((char*)&data, sizeof(data));
 	}
 
 	if (strncmp(data.id, "data", 4) != 0)
@@ -76,7 +76,7 @@ SoundData Audio::SoundLoadWave(const char *filename)
 		assert(0);
 	}
 
-	char *pBuffer = new char[data.size];
+	char* pBuffer = new char[data.size];
 	file.read(pBuffer, data.size);
 
 	file.close();
@@ -84,14 +84,14 @@ SoundData Audio::SoundLoadWave(const char *filename)
 	SoundData soundData = {};
 
 	soundData.wfex = format.fmt;
-	soundData.pBuffer = reinterpret_cast<BYTE *>(pBuffer);
+	soundData.pBuffer = reinterpret_cast<BYTE*>(pBuffer);
 	soundData.BufferSize = data.size;
 
 
 	return soundData;
 }
 
-void Audio::SoundUnload(SoundData *soundData)
+void Audio::SoundUnload(SoundData* soundData)
 {
 	delete[] soundData->pBuffer;
 
@@ -100,11 +100,11 @@ void Audio::SoundUnload(SoundData *soundData)
 	soundData->wfex = {};
 }
 
-void Audio::SoundSEPlayWave( const SoundData &soundData)
+void Audio::SoundSEPlayWave(const SoundData& soundData)
 {
 	HRESULT result;
 
-	IXAudio2SourceVoice *pSourceVoice = nullptr;
+	IXAudio2SourceVoice* pSourceVoice = nullptr;
 	result = xAudio2->CreateSourceVoice(&pSourceVoice, &soundData.wfex);
 	assert(SUCCEEDED(result));
 
@@ -120,11 +120,11 @@ void Audio::SoundSEPlayWave( const SoundData &soundData)
 	result = pSourceVoice->Start();
 }
 
-void Audio::SoundBGMPlayLoopWave(const SoundData &soundData, IXAudio2SourceVoice *pSourceVoice)
+void Audio::SoundBGMPlayLoopWave(const SoundData& soundData)
 {
 	HRESULT result;
 
-	result = xAudio2->CreateSourceVoice(&pSourceVoice, &soundData.wfex);
+	result = xAudio2->CreateSourceVoice(&BGM, &soundData.wfex);
 	assert(SUCCEEDED(result));
 
 	XAUDIO2_BUFFER buf{};
@@ -134,24 +134,40 @@ void Audio::SoundBGMPlayLoopWave(const SoundData &soundData, IXAudio2SourceVoice
 	buf.LoopCount = XAUDIO2_LOOP_INFINITE;
 
 	// 波形データの再生
-	result = pSourceVoice->SubmitSourceBuffer(&buf);
+	result = BGM->SubmitSourceBuffer(&buf);
 
 
-	result = pSourceVoice->Start();
+	result = BGM->Start();
 }
 
-void Audio::SoundStop( const SoundData &soundData,IXAudio2SourceVoice *pSourceVoice)
+void Audio::SoundStop()
+{
+	BGM->Stop(0);
+}
+
+void Audio::SoundRUNPlayLoopWave(const SoundData& soundData)
 {
 	HRESULT result;
 
-	result = xAudio2->CreateSourceVoice(&pSourceVoice, &soundData.wfex);
+	result = xAudio2->CreateSourceVoice(&RUN, &soundData.wfex);
 	assert(SUCCEEDED(result));
 
-	XAUDIO2_VOICE_STATE xa2state;
-	pSourceVoice->GetState(&xa2state);
+	XAUDIO2_BUFFER buf{};
+	buf.pAudioData = soundData.pBuffer;
+	buf.AudioBytes = soundData.BufferSize;
+	buf.Flags = XAUDIO2_END_OF_STREAM;
+	buf.LoopCount = XAUDIO2_LOOP_INFINITE;
+
+	// 波形データの再生
+	result = RUN->SubmitSourceBuffer(&buf);
 
 
-	result = pSourceVoice->Stop(0);
+	result = RUN->Start();
+}
+
+void Audio::SoundRUNStop()
+{
+	RUN->Stop(0);
 }
 
 void Audio::SetVolume(float volume)

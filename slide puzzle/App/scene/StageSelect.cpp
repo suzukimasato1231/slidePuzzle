@@ -35,6 +35,8 @@ void StageSelect::Init()
 	//オブジェクト生成
 	startGraph = Sprite::Get()->SpriteCreate(L"Resources/start.png");
 
+	selectSound = Audio::Get()->SoundLoadWave("Resources/Sound/select.wav");
+
 	// シーン遷移の演出の初期化
 	sceneChange_ = std::make_unique<SceneChange>();
 }
@@ -48,6 +50,7 @@ void StageSelect::Update()
 	if ((Input::Get()->KeybordTrigger(DIK_SPACE) || Input::Get()->ControllerDown(ButtonA)) && sceneChange_->GetinEndFlag())
 	{
 		sceneChange_->SceneChangeStart("");
+		Audio::Get()->SoundSEPlayWave(selectSound);
 	}
 
 	if (sceneChange_->GetOutEndFlag())

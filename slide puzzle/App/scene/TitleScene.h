@@ -49,8 +49,7 @@ private://定義
 	// シーンチェンジ
 	std::unique_ptr<SceneChange> sceneChange_;
 	SpriteData titleGraph;
-	std::unique_ptr<Player>player;
-	std::unique_ptr<Plate>plate;
 	SpriteData back;
+	SoundData selectSound;
 };
 

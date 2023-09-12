@@ -3,7 +3,7 @@
 #include <array>
 #include <iostream>
 #include <algorithm>
-
+#include<Audio.h>
 #include"Easing.h"
 
 //ƒpƒlƒ‹‚Ìí—Ş
@@ -110,6 +110,8 @@ private:
 	TextureData landmarkTex = {};
 	Vec3 crystalRote = {};
 	const Vec3 crystalRoteSpeed = {0.0f,1.0f,0.0f};
+	SoundData decide = {};
+
 	// ŠÖ”‚ÌŠÇ—
 	std::vector<std::function<void()>> func_;
 	// ŠÖ”‚Ì”Ô†

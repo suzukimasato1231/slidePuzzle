@@ -4,6 +4,7 @@
 #include"plate.h"
 #include"Easing.h"
 #include<random>
+#include<Input.h>
 Player::Player()
 {
 }
@@ -53,6 +54,11 @@ void Player::Init()
 
 
 	particleGraph = Texture::Get()->LoadTexture(L"Resources/Paricle/kirakira.png");
+
+	crashSound = Audio::Get()->SoundLoadWave("Resources/Sound/crash.wav");
+	crystalSound = Audio::Get()->SoundLoadWave("Resources/Sound/crystal.wav");
+	runSound = Audio::Get()->SoundLoadWave("Resources/Sound/move.wav");
+	turboSound = Audio::Get()->SoundLoadWave("Resources/Sound/turbo.wav");
 }
 
 void Player::Update(Plate* plate)
@@ -63,6 +69,7 @@ void Player::Update(Plate* plate)
 	PointUpdate();
 	DeadRotation();
 	comboParticle->UpdateFollow(position);
+	Dash();
 }
 
 void Player::Draw()
@@ -140,9 +147,10 @@ void Player::PointUpdate()
 
 void Player::DirectChange(Plate* plate)
 {
+	if (isDead == true) { return; }
 	bool hit = false;
 	Vec2 colPos = { position.x,position.z };
-	if (isPosFlag == false && isPosSecondFlag == false && isDead == false)
+	if (isPosFlag == false && isPosSecondFlag == false)
 	{
 		if (direction == UP)
 		{
@@ -172,6 +180,9 @@ void Player::DirectChange(Plate* plate)
 			{
 			case NONE:
 				isDead = true;
+				Audio::Get()->SoundRUNStop();
+				Audio::Get()->SoundSEPlayWave(crashSound);
+
 				break;
 			case WIDTHSTRAIGHTLINE://横直線
 				LineInit();
@@ -180,6 +191,9 @@ void Player::DirectChange(Plate* plate)
 				if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == UP || direction == DOWN))
 				{
 					isDead = true;
+					Audio::Get()->SoundRUNStop();
+					Audio::Get()->SoundSEPlayWave(crashSound);
+
 				}
 				break;
 			case HEIGHTSTRAIGHTLINE://縦直線
@@ -189,6 +203,9 @@ void Player::DirectChange(Plate* plate)
 				if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == LEFT || direction == RIGHT))
 				{
 					isDead = true;
+					Audio::Get()->SoundRUNStop();
+					Audio::Get()->SoundSEPlayWave(crashSound);
+
 				}
 				break;
 			case CROSS:            //十字
@@ -205,6 +222,9 @@ void Player::DirectChange(Plate* plate)
 				if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == LEFT || direction == UP))
 				{
 					isDead = true;
+					Audio::Get()->SoundRUNStop();
+					Audio::Get()->SoundSEPlayWave(crashSound);
+
 				}
 				break;
 			case CUR_LEFTDOWN:	   //カーブ左と下
@@ -214,6 +234,9 @@ void Player::DirectChange(Plate* plate)
 				if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == LEFT || direction == DOWN))
 				{
 					isDead = true;
+					Audio::Get()->SoundRUNStop();
+					Audio::Get()->SoundSEPlayWave(crashSound);
+
 				}
 				break;
 			case CUR_RIGHTUP:      //カーブ右と上
@@ -223,6 +246,9 @@ void Player::DirectChange(Plate* plate)
 				if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == RIGHT || direction == UP))
 				{
 					isDead = true;
+					Audio::Get()->SoundRUNStop();
+					Audio::Get()->SoundSEPlayWave(crashSound);
+
 				}
 				break;
 			case CUR_RIGHTDOWN:    //カーブ右と下
@@ -232,6 +258,9 @@ void Player::DirectChange(Plate* plate)
 				if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == RIGHT || direction == DOWN))
 				{
 					isDead = true;
+					Audio::Get()->SoundRUNStop();
+					Audio::Get()->SoundSEPlayWave(crashSound);
+
 				}
 				break;
 			case DCUR_LEFTUP_RIGHTDOWN://ダブルカーブ左と上＆右と下
@@ -259,6 +288,8 @@ void Player::DirectChange(Plate* plate)
 	if (hit == false)
 	{
 		isDead = true;
+		Audio::Get()->SoundRUNStop();
+		Audio::Get()->SoundSEPlayWave(crashSound);
 	}
 }
 
@@ -279,7 +310,6 @@ void Player::Move()
 		//移動終わったら
 		if (plateTime >= 1.0f)
 		{
-			//posStartSecond = posEnd;
 			turnStartSecond = rotation;
 			isPosFlag = false;
 			plateTime = 0.0f;
@@ -329,6 +359,7 @@ void Player::CrstalGet(Plate* plate)
 			isScoreDraw = true;
 			scorePos = position;
 			scoreDrawTime = scoreDrawTimeMax;
+			Audio::Get()->SoundSEPlayWave(crystalSound);
 			//クリスタルが消える処理
 			plate->DeleteCrstal(i);
 		}
@@ -582,12 +613,38 @@ void Player::TurnDownRight(const Vec2 platePos)
 
 void Player::DeadRotation()
 {
+
+	if (runSoundFlag == false)
+	{
+		runSoundFlag = true;
+		Audio::Get()->SoundRUNPlayLoopWave(runSound);
+	}
+
 	if (isDead == false) { return; }
 
 	rotation.z += 3.0f;
 	if (rotation.z >= 180.0f)
 	{
 		rotation.z = 180.0f;
+	}
+
+}
+
+void Player::Dash()
+{
+
+	if (Input::Get()->KeybordPush(DIK_LCONTROL) == true)
+	{
+		plateTime += 0.04f;
+		if (turboSoundFlag == false)
+		{
+			Audio::Get()->SoundSEPlayWave(turboSound);
+			turboSoundFlag = true;
+		}
+	}
+	else
+	{
+		turboSoundFlag = false;
 	}
 
 }

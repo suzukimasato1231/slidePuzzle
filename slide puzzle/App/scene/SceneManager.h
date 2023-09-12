@@ -69,7 +69,8 @@ private://’è‹`
 	//Ÿ‚ÌƒV[ƒ“
 	BaseScene* nextScene_ = nullptr;
 
-	Audio* m_audio = nullptr;
-
 	ShadowMap  m_shadowMapFar;
+
+	SoundData sound;
+	SoundData moveSound;
 };

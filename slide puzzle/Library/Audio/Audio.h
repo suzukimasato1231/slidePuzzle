@@ -40,7 +40,7 @@ private:
 public:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	ComPtr<IXAudio2>xAudio2;
-	IXAudio2MasteringVoice *masterVoice;
+	IXAudio2MasteringVoice* masterVoice;
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
@@ -54,21 +54,27 @@ public:
 	/// 音作成
 	/// </summary>
 	/// <returns></returns>
-	static Audio *Create();
+	static Audio* Create();
 
 	//WAVE読み込み
-	static SoundData SoundLoadWave(const char *firename);
+	static SoundData SoundLoadWave(const char* firename);
 	//メモリ削除
-	static void SoundUnload(SoundData *soundData);
+	static void SoundUnload(SoundData* soundData);
 	//1回再生
-	void Audio::SoundSEPlayWave( const SoundData &soundData);
+	void Audio::SoundSEPlayWave(const SoundData& soundData);
 	//ループ再生
-	void Audio::SoundBGMPlayLoopWave( const SoundData &soundData, IXAudio2SourceVoice *pSourceVoice);
+	void Audio::SoundBGMPlayLoopWave(const SoundData& soundData);
 
-	void Audio::SoundStop( const SoundData &soundData, IXAudio2SourceVoice *pSourceVoice);
+	void Audio::SoundStop();
+
+	//ループ再生
+	void Audio::SoundRUNPlayLoopWave(const SoundData& soundData);
+
+	void Audio::SoundRUNStop();
 	//音量調節
 	void Audio::SetVolume(float volume);
 
-	IXAudio2SourceVoice *BGM = nullptr;
+	IXAudio2SourceVoice* BGM = nullptr;
+	IXAudio2SourceVoice* RUN = nullptr;
 };
 

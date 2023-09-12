@@ -54,5 +54,6 @@ private://’è‹`
 	int scene = 0;
 
 	SpriteData gameoverGraph;
+	SoundData selectSound;
 
 };

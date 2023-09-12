@@ -23,7 +23,7 @@ void Plate::Init()
 	landmarkTex = Texture::Get()->LoadTexture(L"Resources/forcusGrid.png");
 	const Vec3 basePos = { -9.0f,-0.2f,6.0f };
 	const Vec2 varPos = { 6.1f,-6.1f };
-
+	decide = Audio::Get()->SoundLoadWave("Resources/Sound/panelMove.wav");
 
 	//ここからステージロード
 	static char* filePath = nullptr;
@@ -192,6 +192,7 @@ void Plate::None()
 		{
 			phase_ = 1;
 			easeData_->Reset();
+			Audio::Get()->SoundSEPlayWave(decide);
 		}
 	}
 
