@@ -137,6 +137,16 @@ void Plate::AddSetSelectBlockNumber(int num)
 	if (phase_ != 0) { return; }
 	saveSelectionBlockNumber_ = selectionStageNumber_;
 	selectionStageNumber_ += num;
+
+	if (num == -1 && (saveSelectionBlockNumber_ == 0 || saveSelectionBlockNumber_ == 4 || saveSelectionBlockNumber_ == 8))
+	{
+		selectionStageNumber_ += 4;
+	}
+	else if (num == 1 && (saveSelectionBlockNumber_ == 3 || saveSelectionBlockNumber_ == 7 || saveSelectionBlockNumber_ == 11))
+	{
+		selectionStageNumber_ -= 4;
+	}
+
 	if (selectionStageNumber_ < 0)
 	{
 		selectionStageNumber_ = static_cast<int>(seaveStageBlockPosition_.size() + static_cast<unsigned long long>(selectionStageNumber_));
