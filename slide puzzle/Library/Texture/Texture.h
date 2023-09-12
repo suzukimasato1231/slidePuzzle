@@ -52,12 +52,18 @@ public:
 	TextureData GetPostEfect() const { return m_postEfect; }
 	//白画像
 	TextureData GetWhite()const { return m_white; }
+
+	void KeepTexture() { k_texNum = m_texNum; }
+
+	void Delete() { m_texNum = k_texNum; }
 private:
 	//定数バッファ用のデスクリプタヒープ
 	ComPtr<ID3D12DescriptorHeap >m_descHeap = { nullptr };
 
 	//テクスチャデータの作成
 	int m_texNum = 0;
+
+	int k_texNum = 0;
 	//白画像保存用
 	TextureData m_white = {};
 	//影保存用

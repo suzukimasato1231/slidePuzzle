@@ -9,6 +9,7 @@
 #include"BaseScene.h"
 #include"../slide puzzle/Player.h"
 #include"../slide puzzle/plate.h"
+#include"../slide puzzle/SceneChange.h"
 extern const int window_width;
 extern const int window_height;
 /// <summary>
@@ -51,4 +52,6 @@ private://定義
 	SpriteData back;
 	SpriteData titleGraph;
 	SpriteData startGraph;
+	// シーンチェンジ
+	std::unique_ptr<SceneChange> sceneChange_;
 };
