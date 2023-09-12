@@ -53,7 +53,7 @@ void Plate::Init()
 		}
 	}
 
-	easeData_ = std::make_unique<EaseData>(15);
+	easeData_ = std::make_unique<EaseData>(5);
 
 	func_.push_back([this]() { return None(); });
 	func_.push_back([this]() { return BeforeMove(); });
@@ -134,7 +134,6 @@ void Plate::Draw()
 
 void Plate::AddSetSelectBlockNumber(int num)
 {
-	if (phase_ != 0) { return; }
 	saveSelectionBlockNumber_ = selectionStageNumber_;
 	selectionStageNumber_ += num;
 

@@ -110,7 +110,6 @@ private:
 	TextureData landmarkTex = {};
 	Vec3 crystalRote = {};
 	const Vec3 crystalRoteSpeed = {0.0f,1.0f,0.0f};
-
 	// 関数の管理
 	std::vector<std::function<void()>> func_;
 	// 関数の番号
@@ -129,11 +128,11 @@ private:
 	int selectionStageNumber_ = 4;
 	// 選択しているブロックの番号
 	int selectionBlockNumber_ = 0;
-	//
+	// 選択しているブロックの番号を保存
 	int saveSelectionBlockNumber_ = 0;
 	// 選択しているブロックの位置
 	Vec3 selectionBlockPosition_ = {};
-	//
+	// イージングのデータ
 	std::unique_ptr<EaseData> easeData_;
 };
 
