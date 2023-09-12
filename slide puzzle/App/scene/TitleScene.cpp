@@ -32,15 +32,13 @@ void TitleScene::Init()
 	FBXObject3d::SetLight(lightGroup.get());
 	Object::SetLight(lightGroup.get());
 
-	player = std::make_unique<Player>();
-	player->Init();
-	plate = std::make_unique<Plate>();
-	plate->Init();
 
 	back = Sprite::Get()->SpriteCreate(L"Resources/back.png");
 
 	//オブジェクト生成
 	titleGraph = Sprite::Get()->SpriteCreate(L"Resources/title.png");
+
+	selectSound = Audio::Get()->SoundLoadWave("Resources/Sound/select.wav");
 
 	// シーン遷移の演出の初期化
 	sceneChange_ = std::make_unique<SceneChange>();
@@ -53,6 +51,7 @@ void TitleScene::Update()
 	if ((Input::Get()->KeybordTrigger(DIK_SPACE) || Input::Get()->ControllerDown(ButtonA)) && sceneChange_->GetinEndFlag())
 	{
 		sceneChange_->SceneChangeStart("");
+		Audio::Get()->SoundSEPlayWave(selectSound);
 	}
 
 	if (sceneChange_->GetOutEndFlag())

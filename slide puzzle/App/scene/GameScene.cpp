@@ -41,6 +41,8 @@ void GameScene::Init()
 	//オブジェクト生成
 	gameoverGraph = Sprite::Get()->SpriteCreate(L"Resources/gameover.png");
 
+	selectSound = Audio::Get()->SoundLoadWave("Resources/Sound/select.wav");
+
 	// シーン遷移の演出の初期化
 	sceneChange_ = std::make_unique<SceneChange>();
 }
@@ -54,14 +56,19 @@ void GameScene::Update()
 		if (Input::Get()->KeybordTrigger(DIK_SPACE) && player->GetDeadFlag() == true)
 		{
 			sceneChange_->SceneChangeStart("");
+			Audio::Get()->SoundSEPlayWave(selectSound);
 		}
 		else
 		{
 			if (Input::Get()->KeybordTrigger(DIK_SPACE)) { plate->SetKeyFlag(true); }
-			else if (Input::Get()->KeybordTrigger(DIK_UP)) { plate->AddSetSelectBlockNumber(-4); }
-			else if (Input::Get()->KeybordTrigger(DIK_DOWN)) { plate->AddSetSelectBlockNumber(4); }
-			else if (Input::Get()->KeybordTrigger(DIK_LEFT)) { plate->AddSetSelectBlockNumber(-1); }
-			else if (Input::Get()->KeybordTrigger(DIK_RIGHT)) { plate->AddSetSelectBlockNumber(1); }
+			else if (Input::Get()->KeybordTrigger(DIK_UP)) { plate->AddSetSelectBlockNumber(-4);
+			Audio::Get()->SoundSEPlayWave(selectSound);}
+			else if (Input::Get()->KeybordTrigger(DIK_DOWN)) { plate->AddSetSelectBlockNumber(4); 
+			Audio::Get()->SoundSEPlayWave(selectSound);}
+			else if (Input::Get()->KeybordTrigger(DIK_LEFT)) { plate->AddSetSelectBlockNumber(-1);
+			Audio::Get()->SoundSEPlayWave(selectSound);}
+			else if (Input::Get()->KeybordTrigger(DIK_RIGHT)) { plate->AddSetSelectBlockNumber(1); 
+			Audio::Get()->SoundSEPlayWave(selectSound);}
 		}
 
 		if (sceneChange_->GetOutEndFlag())

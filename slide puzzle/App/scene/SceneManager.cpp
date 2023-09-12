@@ -14,6 +14,7 @@ SceneManager::~SceneManager()
 {
 	//XAudio2解放
 	Audio::Get()->xAudio2.Reset();
+
 	//音データ解放
 	scene_->Finalize();
 	delete scene_;
@@ -65,6 +66,10 @@ void SceneManager::Initialize()
 	//シーンをタイトルに設定
 	BaseScene* scene = new TitleScene();
 	SetNextScene(scene);
+	sound = Audio::SoundLoadWave("Resources/Sound/BGM.wav");
+	Audio::Get()->SoundBGMPlayLoopWave(sound);
+	Audio::Get()->SetVolume(0.1f);
+
 }
 
 void SceneManager::Update()
@@ -130,5 +135,5 @@ void SceneManager::Delete()
 
 void SceneManager::SceneChange()
 {
-	
+
 }
