@@ -8,6 +8,7 @@
 #include<Audio.h>
 #include"../slide puzzle/Player.h"
 #include"../slide puzzle/plate.h"
+#include"../slide puzzle/SceneChange.h"
 extern const int window_width;
 extern const int window_height;
 
@@ -44,7 +45,8 @@ private:
 	std::unique_ptr<LightGroup>lightGroup;
 	std::unique_ptr<Audio> audio;
 private://定義
-	
+	// シーンチェンジ
+	std::unique_ptr<SceneChange> sceneChange_;
 	std::unique_ptr<Player>player;
 	std::unique_ptr<Plate>plate;
 

@@ -4,6 +4,7 @@
 #include<Audio.h>
 #include"BaseScene.h"
 #include<Sprite.h>
+#include"../slide puzzle/SceneChange.h"
 /// <summary>
 /// シーン移動
 /// </summary>
@@ -51,5 +52,6 @@ public:
 private:
 	std::unique_ptr<LightGroup> lightGroup;
 private:
-	
+	// シーンチェンジ
+	std::unique_ptr<SceneChange> sceneChange_;
 };
