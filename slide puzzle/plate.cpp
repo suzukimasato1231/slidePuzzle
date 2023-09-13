@@ -37,12 +37,12 @@ void Plate::Init()
 
 	//ステージごとにロード
 	filePath = (char*)"./Resources/stage/stage1.csv";
-	crystalPath = (char*)"./Resources/stage/crystal1.csv";
+	//crystalPath = (char*)"./Resources/stage/crystal1.csv";
 
 
 	LoadSize(stageWidth, stageHeight, filePath);
 	LoadCSV(stage, filePath, stageWidth, stageHeight);
-	LoadCSV(crystal, crystalPath, stageWidth, stageHeight);
+	//LoadCSV(crystal, crystalPath, stageWidth, stageHeight);
 	for (int j = 0; j < stageHeight; j++)
 	{
 		for (int i = 0; i < stageWidth; i++)
@@ -53,9 +53,11 @@ void Plate::Init()
 			blockData_.blockType.push_back(static_cast<PanelStatus>(stage[j][i]));
 			blockData_.position.push_back(Vec3(basePos.x + i * varPos.x, basePos.y, basePos.z + j * varPos.y));
 
-			blockData_.crytallFlag.push_back(static_cast<Crystal>(crystal[j][i]));
+			blockData_.crytallFlag.push_back(NOCRYSTALL);
 		}
 	}
+
+	CrystalCreate();
 
 	easeData_ = std::make_unique<EaseData>(5);
 
