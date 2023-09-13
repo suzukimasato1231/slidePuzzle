@@ -50,7 +50,6 @@ void Player::Update(Plate* plate)
 	PointUpdate();
 	DeadRotation();
 	comboParticle->UpdateFollow(position);
-	DecoyUpdate();
 }
 
 void Player::Draw()
