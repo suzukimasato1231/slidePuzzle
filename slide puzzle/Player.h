@@ -173,24 +173,8 @@ private:
 	bool runSoundFlag = false;
 
 	//コンボ関連
-	SpriteData backSprite;
-	SpriteData comboSprite;
-	SpriteData numberGraph[10] = {};
-	const int comboTimeMax = 250;//コンボ最大
-	int comboTime = 0;           //コンボ時間
-	int pointNum = 0;            //得点
-	int pointPlas = 10;          //得点加算
 	std::unique_ptr < ParticleManager> comboParticle = nullptr;
 	TextureData particleGraph = {};
-
-	//スコア描画
-	ObjectData scoreDraw = {};
-	SpriteData comboGraph[11] = {};
-	Vec3 scorePos = {};
-	bool isScoreDraw = false;
-	const int scoreDrawTimeMax = 50;
-	int scoreDrawTime = 0;
-
 
 	//クリスタルスピード関連
 	const float speedPlas = 0.002f;  //スピードUP数

@@ -8,6 +8,7 @@
 #include"TitleScene.h"
 #include"StageSelect.h"
 #include"ResultScene.h"
+#include "../slide puzzle/Score.h"
 SceneManager::SceneManager()
 {}
 SceneManager::~SceneManager()
@@ -57,6 +58,7 @@ void SceneManager::Initialize()
 	PostEffect::Get()->Initialize(DirectXBase::Get()->GetDevice());
 	////‰e
 	m_shadowMapFar.Init();
+	Score::GetInstance()->Initialize();
 	Texture::Get()->LoadShadowTexture(m_shadowMapFar.GetTexbuff());
 	Texture::Get()->LoadCameraTexture(PostEffect::Get()->GetDepth());
 

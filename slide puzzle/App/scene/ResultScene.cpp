@@ -5,6 +5,7 @@
 #include<Input.h>
 #include"TitleScene.h"
 #include"SceneManager.h"
+#include "../slide puzzle/Score.h"
 ResultScene::ResultScene()
 {}
 ResultScene::~ResultScene()
@@ -26,6 +27,13 @@ void ResultScene::Init()
 
 	// シーン遷移の演出の初期化
 	sceneChange_ = std::make_unique<SceneChange>();
+
+	back = Sprite::Get()->SpriteCreate(L"Resources/back.png");
+
+	Score::GetInstance()->SetIsScoreDraw(false);
+
+	//オブジェクト生成
+	gameoverGraph = Sprite::Get()->SpriteCreate(L"Resources/gameover.png");
 }
 
 void ResultScene::Update()
@@ -48,7 +56,9 @@ void ResultScene::Update()
 
 void ResultScene::Draw()
 {
-	DebugText::Get()->Print(10, 10, 4, "Result");
+	Sprite::Get()->Draw(back, Vec2(), static_cast<float>(window_width), static_cast<float>(window_height));
+	Sprite::Get()->Draw(gameoverGraph, Vec2(), static_cast<float>(window_width), static_cast<float>(window_height));
+	Score::GetInstance()->Draw(Vec2(static_cast<float>((window_width / 3)) + 90.0f, static_cast<float>(window_height / 2) - 70.0f));
 	sceneChange_->Draw();
 }
 
