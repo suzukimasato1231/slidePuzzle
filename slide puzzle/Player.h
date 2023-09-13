@@ -171,9 +171,9 @@ private:
 
 
 	//クリスタルスピード関連
-	const float speedPlas = 0.0025f;  //スピードUP数
-	const float speedMax = 0.06f;     //最大スピード
-	const float turnSpeedMin = 0.01f;//最小スピード数
+	const float speedPlas = 0.002f;  //スピードUP数
+	const float speedMax = 0.05f;     //最大スピード
+	const float turnSpeedMin = 0.008f;//最小スピード数
 	float turnSpeed = 0.01f;         //スピード
 
 	float plateTime = 0.0f;

@@ -25,6 +25,10 @@ void Plate::Init()
 	const Vec2 varPos = { 6.1f,-6.1f };
 	decide = Audio::Get()->SoundLoadWave("Resources/Sound/panelMove.wav");
 
+	crystalParticle = std::make_unique<ParticleManager>();
+	crystalParticle->Initialize();
+	particleGraph = Texture::Get()->LoadTexture(L"Resources/Paricle/kirakira.png");
+
 	//ここからステージロード
 	static char* filePath = nullptr;
 	static char* crystalPath = nullptr;
@@ -69,6 +73,8 @@ void Plate::Update()
 	CrystalRote();
 
 	CrystalCreate();
+
+	crystalParticle->Update();
 }
 
 void Plate::Draw()
@@ -110,7 +116,7 @@ void Plate::Draw()
 			break;
 		case DCUR_LEFTUP_RIGHTDOWN://ダブルカーブ左と上＆右と下
 			Object::Draw(plateDoubleTurn, blockData_.position[i],
-				Vec3(3.0f, 3.0f, 3.0f), Vec3(0.0f, 0.0f, 0.0f));
+				Vec3(3.0f, 3.0f, 3.0f), Vec3(0.0f, 90.0f, 0.0f));
 			break;
 		case DCUR_LEFTDOWN_RIGHTUP://ダブルカーブ左と下＆右と上
 			Object::Draw(plateDoubleTurn, blockData_.position[i],
@@ -130,6 +136,9 @@ void Plate::Draw()
 
 	Object::Draw(landmarkObject, seaveStageBlockPosition_[selectionStageNumber_],
 		Vec3(5.0f, 2.0f, 5.0f), Vec3(0.0f, 0.0f, 0.0f), landmarkTex);
+
+
+	crystalParticle->Draw(particleGraph);
 }
 
 void Plate::AddSetSelectBlockNumber(int num)
@@ -446,6 +455,16 @@ bool Plate::SelectionBlockCount()
 void Plate::CrystalRote()
 {
 
+	for (int i = 0; i < blockData_.blockType.size(); i++)
+	{
+		if (blockData_.crytallFlag[i] == CRYSTALL)
+		{
+			crystalParticle->BreakBoxAdd(blockData_.position[i],
+				0.0f, 0.3f, 0.0f,
+				Vec4(0.2f, 0.2f, 0.2f, 0.2f), Vec4(0.0f, 0.0f, 0.0f, 0.0f));
+		}
+	}
+
 	crystalRote += crystalRoteSpeed;
 	if (crystalRote.y >= 360.0f)
 	{
@@ -497,7 +516,7 @@ void Plate::CrystalCreate()
 	{
 		crystalPath = (char*)"./Resources/stage/crystal3.csv";
 	}
-	
+
 
 	LoadSize(stageWidth, stageHeight, crystalPath);
 	LoadCSV(crystal, crystalPath, stageWidth, stageHeight);

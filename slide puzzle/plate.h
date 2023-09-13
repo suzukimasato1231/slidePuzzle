@@ -5,6 +5,7 @@
 #include <algorithm>
 #include<Audio.h>
 #include"Easing.h"
+#include<ParticleManager.h>
 
 //ƒpƒlƒ‹‚Ìí—Ş
 enum PanelStatus
@@ -111,6 +112,9 @@ private:
 	Vec3 crystalRote = {};
 	const Vec3 crystalRoteSpeed = {0.0f,1.0f,0.0f};
 	SoundData decide = {};
+
+	std::unique_ptr < ParticleManager> crystalParticle = nullptr;
+	TextureData particleGraph;
 
 	// ŠÖ”‚ÌŠÇ—
 	std::vector<std::function<void()>> func_;

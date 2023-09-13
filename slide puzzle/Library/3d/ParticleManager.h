@@ -97,6 +97,16 @@ public: // 静的メンバ関数
 	void Add(int life, const Vec3 &position, const Vec3 &velocity, const Vec3 &accel,
 		float start_scale, float end_scale, const Vec4 &start_color, const Vec4 &end_color);
 
+	/// <summary>
+	/// パーティクルの追加
+	/// </summary>
+	/// <param name = "life">生存時間</param>
+	/// <param name = "position">初期座標</param>
+	/// <param name = "velocity">速度</param>
+	/// <param name = "accel">加速度</param>
+	void Add2(int life, const Vec3& position, const Vec3& velocity, const Vec3& accel,
+		float start_scale, float end_scale, const Vec4& start_color, const Vec4& end_color);
+
 	void BreakBoxAdd(const Vec3 &Pos, float Vel, float start_scale, float end_scale, const Vec4 &start_color, const Vec4 &end_color);
 
 	/// <summary>
