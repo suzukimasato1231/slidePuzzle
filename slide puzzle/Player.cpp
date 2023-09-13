@@ -180,120 +180,194 @@ void Player::DirectChange(Plate* plate)
 			colPos.x -= 0.5f;
 		}
 	}
-	for (int i = 0; i < plate->GetPanelNum(); i++)
+	if (isPosFlag == false && isPosSecondFlag == false)
 	{
-		//当たり判定
-		if (Collision::BoxCollision(
-			colPos, Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z),
-			pSize / 2, sSize / 2) && isDead == false)
+		for (int i = 0; i < plate->GetPanelNum(); i++)
 		{
-			switch (plate->GetPanelStatus(i))
+			//当たり判定
+			if (Collision::BoxCollision(
+				colPos, Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z),
+				pSize / 2, sSize / 2) && isDead == false)
 			{
-			case NONE:
-				isDead = true;
-				Audio::Get()->SoundRUNStop();
-				Audio::Get()->SoundSEPlayWave(crashSound);
-
-				break;
-			case WIDTHSTRAIGHTLINE://横直線
-				LineInit();
-				TurnLeft(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
-				TurnRight(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
-				if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == UP || direction == DOWN))
+				switch (plate->GetPanelStatus(i))
 				{
+				case NONE:
 					isDead = true;
 					Audio::Get()->SoundRUNStop();
 					Audio::Get()->SoundSEPlayWave(crashSound);
+					break;
+				case WIDTHSTRAIGHTLINE://横直線
+					LineInit();
+					TurnLeft(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
+					TurnRight(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
+					plateNumber = i;
+					if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == UP || direction == DOWN))
+					{
+						isDead = true;
+						Audio::Get()->SoundRUNStop();
+						Audio::Get()->SoundSEPlayWave(crashSound);
 
-				}
-				break;
-			case HEIGHTSTRAIGHTLINE://縦直線
-				LineInit();
-				TurnUp(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
-				TurnDown(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
-				if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == LEFT || direction == RIGHT))
-				{
-					isDead = true;
-					Audio::Get()->SoundRUNStop();
-					Audio::Get()->SoundSEPlayWave(crashSound);
+					}
+					break;
+				case HEIGHTSTRAIGHTLINE://縦直線
+					LineInit();
+					TurnUp(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
+					TurnDown(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
+					plateNumber = i;
+					if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == LEFT || direction == RIGHT))
+					{
+						isDead = true;
+						Audio::Get()->SoundRUNStop();
+						Audio::Get()->SoundSEPlayWave(crashSound);
 
-				}
-				break;
-			case CROSS:            //十字
-				LineInit();
-				TurnLeft(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
-				TurnRight(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
-				TurnUp(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
-				TurnDown(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
-				break;
-			case CUR_LEFTUP:       //カーブ左と上	
-				TurnInit();
-				TurnDownLeft(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
-				TurnRightUp(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
-				if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == LEFT || direction == UP))
-				{
-					isDead = true;
-					Audio::Get()->SoundRUNStop();
-					Audio::Get()->SoundSEPlayWave(crashSound);
+					}
+					break;
+				case CROSS:            //十字
+					LineInit();
+					TurnLeft(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
+					TurnRight(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
+					TurnUp(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
+					TurnDown(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
+					plateNumber = i;
+					break;
+				case CUR_LEFTUP:       //カーブ左と上	
+					TurnInit();
+					TurnDownLeft(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
+					TurnRightUp(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
+					plateNumber = i;
+					if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == LEFT || direction == UP))
+					{
+						isDead = true;
+						Audio::Get()->SoundRUNStop();
+						Audio::Get()->SoundSEPlayWave(crashSound);
 
-				}
-				break;
-			case CUR_LEFTDOWN:	   //カーブ左と下
-				TurnInit();
-				TurnRightDown(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
-				TurnUpLeft(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
-				if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == LEFT || direction == DOWN))
-				{
-					isDead = true;
-					Audio::Get()->SoundRUNStop();
-					Audio::Get()->SoundSEPlayWave(crashSound);
+					}
+					break;
+				case CUR_LEFTDOWN:	   //カーブ左と下
+					TurnInit();
+					TurnRightDown(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
+					TurnUpLeft(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
+					plateNumber = i;
+					if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == LEFT || direction == DOWN))
+					{
+						isDead = true;
+						Audio::Get()->SoundRUNStop();
+						Audio::Get()->SoundSEPlayWave(crashSound);
 
-				}
-				break;
-			case CUR_RIGHTUP:      //カーブ右と上
-				TurnInit();
-				TurnLeftUp(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
-				TurnDownRight(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
-				if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == RIGHT || direction == UP))
-				{
-					isDead = true;
-					Audio::Get()->SoundRUNStop();
-					Audio::Get()->SoundSEPlayWave(crashSound);
+					}
+					break;
+				case CUR_RIGHTUP:      //カーブ右と上
+					TurnInit();
+					TurnLeftUp(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
+					TurnDownRight(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
+					plateNumber = i;
+					if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == RIGHT || direction == UP))
+					{
+						isDead = true;
+						Audio::Get()->SoundRUNStop();
+						Audio::Get()->SoundSEPlayWave(crashSound);
 
-				}
-				break;
-			case CUR_RIGHTDOWN:    //カーブ右と下
-				TurnInit();
-				TurnLeftDown(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
-				TurnUpRight(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
-				if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == RIGHT || direction == DOWN))
-				{
-					isDead = true;
-					Audio::Get()->SoundRUNStop();
-					Audio::Get()->SoundSEPlayWave(crashSound);
+					}
+					break;
+				case CUR_RIGHTDOWN:    //カーブ右と下
+					TurnInit();
+					TurnLeftDown(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
+					TurnUpRight(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
+					plateNumber = i;
+					if (posEndSecond.x == 0.0f && posEndSecond.z == 0.0f && (direction == RIGHT || direction == DOWN))
+					{
+						isDead = true;
+						Audio::Get()->SoundRUNStop();
+						Audio::Get()->SoundSEPlayWave(crashSound);
 
+					}
+					break;
+				case DCUR_LEFTUP_RIGHTDOWN://ダブルカーブ左と上＆右と下
+					TurnInit();
+					TurnDownLeft(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
+					TurnRightUp(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
+					TurnLeftDown(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
+					TurnUpRight(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
+					plateNumber = i;
+					break;
+				case DCUR_LEFTDOWN_RIGHTUP://ダブルカーブ左と下＆右と上
+					TurnInit();
+					TurnLeftUp(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
+					TurnDownRight(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
+					TurnRightDown(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
+					TurnUpLeft(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
+					plateNumber = i;
+					break;
+				default:
+					break;
 				}
-				break;
-			case DCUR_LEFTUP_RIGHTDOWN://ダブルカーブ左と上＆右と下
-				TurnInit();
-				TurnDownLeft(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
-				TurnRightUp(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
-				TurnLeftDown(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
-				TurnUpRight(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
-				break;
-			case DCUR_LEFTDOWN_RIGHTUP://ダブルカーブ左と下＆右と上
-				TurnInit();
-				TurnLeftUp(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
-				TurnDownRight(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
-				TurnRightDown(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
-				TurnUpLeft(Vec2(plate->GetPanelPos(i).x, plate->GetPanelPos(i).z));
-				break;
-			default:
-				break;
+				hit = true;
+
 			}
-			hit = true;
-
 		}
+	}
+	else
+	{
+		switch (plate->GetPanelStatus(plateNumber))
+		{
+		case NONE:
+			isDead = true;
+			break;
+		case WIDTHSTRAIGHTLINE://横直線
+			LineInit();
+			TurnLeft(Vec2(plate->GetPanelPos(plateNumber).x, plate->GetPanelPos(plateNumber).z));
+			TurnRight(Vec2(plate->GetPanelPos(plateNumber).x, plate->GetPanelPos(plateNumber).z));
+			break;
+		case HEIGHTSTRAIGHTLINE://縦直線
+			LineInit();
+			TurnUp(Vec2(plate->GetPanelPos(plateNumber).x, plate->GetPanelPos(plateNumber).z));
+			TurnDown(Vec2(plate->GetPanelPos(plateNumber).x, plate->GetPanelPos(plateNumber).z));
+			break;
+		case CROSS:            //十字
+			LineInit();
+			TurnLeft(Vec2(plate->GetPanelPos(plateNumber).x, plate->GetPanelPos(plateNumber).z));
+			TurnRight(Vec2(plate->GetPanelPos(plateNumber).x, plate->GetPanelPos(plateNumber).z));
+			TurnUp(Vec2(plate->GetPanelPos(plateNumber).x, plate->GetPanelPos(plateNumber).z));
+			TurnDown(Vec2(plate->GetPanelPos(plateNumber).x, plate->GetPanelPos(plateNumber).z));
+			break;
+		case CUR_LEFTUP:       //カーブ左と上	
+			TurnInit();
+			TurnDownLeft(Vec2(plate->GetPanelPos(plateNumber).x, plate->GetPanelPos(plateNumber).z));
+			TurnRightUp(Vec2(plate->GetPanelPos(plateNumber).x, plate->GetPanelPos(plateNumber).z));
+			break;
+		case CUR_LEFTDOWN:	   //カーブ左と下
+			TurnInit();
+			TurnRightDown(Vec2(plate->GetPanelPos(plateNumber).x, plate->GetPanelPos(plateNumber).z));
+			TurnUpLeft(Vec2(plate->GetPanelPos(plateNumber).x, plate->GetPanelPos(plateNumber).z));
+			break;
+		case CUR_RIGHTUP:      //カーブ右と上
+			TurnInit();
+			TurnLeftUp(Vec2(plate->GetPanelPos(plateNumber).x, plate->GetPanelPos(plateNumber).z));
+			TurnDownRight(Vec2(plate->GetPanelPos(plateNumber).x, plate->GetPanelPos(plateNumber).z));
+			break;
+		case CUR_RIGHTDOWN:    //カーブ右と下
+			TurnInit();
+			TurnLeftDown(Vec2(plate->GetPanelPos(plateNumber).x, plate->GetPanelPos(plateNumber).z));
+			TurnUpRight(Vec2(plate->GetPanelPos(plateNumber).x, plate->GetPanelPos(plateNumber).z));
+			break;
+		case DCUR_LEFTUP_RIGHTDOWN://ダブルカーブ左と上＆右と下
+			TurnInit();
+			TurnDownLeft(Vec2(plate->GetPanelPos(plateNumber).x, plate->GetPanelPos(plateNumber).z));
+			TurnRightUp(Vec2(plate->GetPanelPos(plateNumber).x, plate->GetPanelPos(plateNumber).z));
+			TurnLeftDown(Vec2(plate->GetPanelPos(plateNumber).x, plate->GetPanelPos(plateNumber).z));
+			TurnUpRight(Vec2(plate->GetPanelPos(plateNumber).x, plate->GetPanelPos(plateNumber).z));
+			break;
+		case DCUR_LEFTDOWN_RIGHTUP://ダブルカーブ左と下＆右と上
+			TurnInit();
+			TurnLeftUp(Vec2(plate->GetPanelPos(plateNumber).x, plate->GetPanelPos(plateNumber).z));
+			TurnDownRight(Vec2(plate->GetPanelPos(plateNumber).x, plate->GetPanelPos(plateNumber).z));
+			TurnRightDown(Vec2(plate->GetPanelPos(plateNumber).x, plate->GetPanelPos(plateNumber).z));
+			TurnUpLeft(Vec2(plate->GetPanelPos(plateNumber).x, plate->GetPanelPos(plateNumber).z));
+			break;
+		default:
+			break;
+		}
+		hit = true;
 	}
 	//タイル外にいったら死亡
 	if (hit == false)

@@ -151,6 +151,9 @@ private:
 	int direction = UP;                         //i‚ŞŒü‚«
 	int keepDirection = UP;
 
+	int plateNumber = 0;
+	Vec2 oldPlatePos = {};
+
 	//c‘œ
 	std::array<DecoyData, 2> decoyObject_;
 	int decoyTimer_ = 0;
