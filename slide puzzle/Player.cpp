@@ -74,7 +74,6 @@ void Player::Update(Plate* plate)
 	PointUpdate();
 	DeadRotation();
 	comboParticle->UpdateFollow(position);
-	Dash();
 	DecoyUpdate();
 }
 
@@ -308,6 +307,8 @@ void Player::DirectChange(Plate* plate)
 void Player::Move()
 {
 	if (isDead == true) { return; }
+
+	Dash();
 
 	if (isPosFlag == true)
 	{

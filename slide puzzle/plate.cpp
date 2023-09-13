@@ -177,7 +177,7 @@ void Plate::DeleteCrstal(int num)
 
 void Plate::None()
 {
-	if (keyFlag_)
+	if (keyFlag_ && !endFlag_)
 	{
 		NullStageBlockNumber();
 

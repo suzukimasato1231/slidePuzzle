@@ -77,6 +77,8 @@ void GameScene::Update()
 			sceneManager_->SetNextScene(scene);
 		}
 
+		plate->SetEnd(player->GetDeadFlag());
+
 		plate->Update();
 		player->Update(plate.get());
 	}
