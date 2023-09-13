@@ -64,12 +64,29 @@ void ParticleManager::Add(int life, const Vec3& position, const Vec3& velocity, 
 	p.e_color = end_color;
 }
 
+void ParticleManager::Add2(int life, const Vec3& position, const Vec3& velocity, const Vec3& accel, float start_scale, float end_scale, const Vec4& start_color, const Vec4& end_color)
+{
+	//リストに要素を追加
+	particles.emplace_front();
+	//追加した要素の参照
+	Particle& p = particles.front();
+	//値のリセット
+	p.position = position;
+	p.velocity = velocity;
+	p.accel = accel;
+	p.num_frame = life;
+	p.s_scale = start_scale;
+	p.e_scale = end_scale;
+	p.s_color = start_color;
+	p.e_color = end_color;
+}
+
 void ParticleManager::BreakBoxAdd(const Vec3& Pos, float Vel, float start_scale, float end_scale, const Vec4& start_color, const Vec4& end_color)
 {
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		//X,Y,Z全て{-5.0f,+5.0f}でランダムに分布
-		const float md_pos = 0.5f;
+		const float md_pos = 2.5f;
 		Vec3 pos = Pos;
 		pos.x += (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
 		pos.y += (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
@@ -83,7 +100,7 @@ void ParticleManager::BreakBoxAdd(const Vec3& Pos, float Vel, float start_scale,
 		//重力に見立ててYのみ{-0.001f,0}でランダム分布
 		Vec3 acc{};
 		//追加
-		Add(30, pos, vel, acc, start_scale, end_scale, start_color, end_color);
+		Add2(30, pos, vel, acc, start_scale, end_scale, start_color, end_color);
 	}
 }
 

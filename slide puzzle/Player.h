@@ -4,6 +4,9 @@
 #include<ParticleManager.h>
 #include<memory>
 #include<Audio.h>
+#include <array>
+#include <algorithm>
+#include <functional>
 class Plate;
 /// <summary>
 /// プレイヤークラス
@@ -20,6 +23,15 @@ private:
 		DOWN,
 		LEFT,
 		RIGHT,
+	};
+
+	struct DecoyData
+	{
+		ObjectData object;
+		Vec3 position;
+		Vec3 rotation;
+		bool flag = false;
+		int timer = 0;
 	};
 public:
 	//コンストラクタ
@@ -128,6 +140,9 @@ private:
 	/// 左コントロールで加速
 	/// </summary>
 	void Dash();
+
+	void DecoyUpdate();
+
 private:
 	ObjectData pObject;                         //プレイヤーオブジェクト
 	Vec3 position = {};                         //位置
@@ -135,6 +150,10 @@ private:
 	Vec3 rotation = {};
 	int direction = UP;                         //進む向き
 	int keepDirection = UP;
+
+	//残像
+	std::array<DecoyData, 2> decoyObject_;
+	int decoyTimer_ = 0;
 
 	//プレート基礎位置
 	const Vec2 basePos = { -9.0f,6.0f };
@@ -171,9 +190,9 @@ private:
 
 
 	//クリスタルスピード関連
-	const float speedPlas = 0.0025f;  //スピードUP数
-	const float speedMax = 0.06f;     //最大スピード
-	const float turnSpeedMin = 0.01f;//最小スピード数
+	const float speedPlas = 0.002f;  //スピードUP数
+	const float speedMax = 0.05f;     //最大スピード
+	const float turnSpeedMin = 0.008f;//最小スピード数
 	float turnSpeed = 0.01f;         //スピード
 
 	float plateTime = 0.0f;
