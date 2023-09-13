@@ -35,6 +35,8 @@ void StageSelect::Init()
 	//オブジェクト生成
 	startGraph = Sprite::Get()->SpriteCreate(L"Resources/start.png");
 
+	sousaGraph = Sprite::Get()->SpriteCreate(L"Resources/sousa.png");
+
 	selectSound = Audio::Get()->SoundLoadWave("Resources/Sound/select.wav");
 
 	// シーン遷移の演出の初期化
@@ -70,12 +72,14 @@ void StageSelect::Draw()
 
 	Sprite::Get()->Draw(startGraph, Vec2(), static_cast<float>(window_width), static_cast<float>(window_height));
 
+	Sprite::Get()->Draw(sousaGraph, Vec2(0.0f,600.0f), 320.0f, 128.0f);
+
 	sceneChange_->Draw();
 }
 
 void StageSelect::ShadowDraw()
 {
-	
+
 }
 
 void StageSelect::Finalize()

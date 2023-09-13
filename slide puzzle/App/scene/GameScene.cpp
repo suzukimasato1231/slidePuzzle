@@ -41,6 +41,8 @@ void GameScene::Init()
 	//オブジェクト生成
 	gameoverGraph = Sprite::Get()->SpriteCreate(L"Resources/gameover.png");
 
+	sousaGraph = Sprite::Get()->SpriteCreate(L"Resources/sousa.png");
+
 	selectSound = Audio::Get()->SoundLoadWave("Resources/Sound/select.wav");
 
 	// シーン遷移の演出の初期化
@@ -102,6 +104,9 @@ void GameScene::Draw()
 	{
 		Sprite::Get()->Draw(gameoverGraph, Vec2(), static_cast<float>(window_width), static_cast<float>(window_height));
 	}*/
+
+
+	Sprite::Get()->Draw(sousaGraph, Vec2(0.0f, 600.0f), 320.0f, 128.0f);
 
 	sceneChange_->Draw();
 }
