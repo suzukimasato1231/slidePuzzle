@@ -54,4 +54,7 @@ private:
 private:
 	// シーンチェンジ
 	std::unique_ptr<SceneChange> sceneChange_;
+
+	SpriteData back;
+	SpriteData gameoverGraph;
 };

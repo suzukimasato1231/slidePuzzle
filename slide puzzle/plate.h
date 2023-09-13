@@ -72,6 +72,8 @@ public:
 
 	Crystal GetCrystal(int i) { return blockData_.crytallFlag[i]; }
 
+	void SetEnd(bool flag) { endFlag_ = flag; }
+
 private:
 
 	void None();
@@ -140,5 +142,7 @@ private:
 	Vec3 selectionBlockPosition_ = {};
 	// イージングのデータ
 	std::unique_ptr<EaseData> easeData_;
+	// 終了フラグ
+	bool endFlag_ = false;
 };
 
