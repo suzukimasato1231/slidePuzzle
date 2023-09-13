@@ -17,6 +17,11 @@ void Player::Init()
 {
 	pObject = Shape::CreateOBJ("car");
 
+	for (int i = 0; i < decoyObject_.size(); i++)
+	{
+		decoyObject_[i].object = Shape::CreateOBJ("car");
+	}
+
 	scoreDraw = Shape::CreateRect(1.0f, 1.0f);
 	backSprite = Sprite::Get()->SpriteCreate(L"Resources/scoreBack.png");
 	comboSprite = Sprite::Get()->SpriteCreate(L"Resources/combo.png");
@@ -70,11 +75,18 @@ void Player::Update(Plate* plate)
 	DeadRotation();
 	comboParticle->UpdateFollow(position);
 	Dash();
+	DecoyUpdate();
 }
 
 void Player::Draw()
 {
-
+	for (int i = 0; i < decoyObject_.size(); i++)
+	{
+		if (decoyObject_[i].flag)
+		{
+			Object::Draw(decoyObject_[i].object, decoyObject_[i].position, Vec3(1.0f, 1.0f, 1.0f), decoyObject_[i].rotation);
+		}
+	}
 	Object::Draw(pObject, position, Vec3(1.0f, 1.0f, 1.0f), rotation);
 }
 
@@ -647,5 +659,40 @@ void Player::Dash()
 		turboSoundFlag = false;
 	}
 
+}
+
+void Player::DecoyUpdate()
+{
+	for (int i = 0; i < decoyObject_.size(); i++)
+	{
+		if (decoyObject_[i].flag)
+		{
+			if (decoyObject_[i].timer > 20)
+			{
+				decoyObject_[i].flag = false;
+				decoyObject_[i].timer = 0;
+			}
+			decoyObject_[i].timer++;
+		}
+	}
+
+	if (!turboSoundFlag) { return; }
+
+	if (decoyTimer_ > 10)
+	{
+		for (int i = 0; i < decoyObject_.size(); i++)
+		{
+			if (!decoyObject_[i].flag)
+			{
+				decoyObject_[i].position = position;
+				decoyObject_[i].rotation = rotation;
+				decoyObject_[i].flag = true;
+				break;
+			}
+		}
+		decoyTimer_ = 0;
+	}
+
+	decoyTimer_++;
 }
 
