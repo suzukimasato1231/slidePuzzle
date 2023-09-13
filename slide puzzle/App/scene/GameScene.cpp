@@ -6,7 +6,7 @@
 #include"Shape.h"
 #include"StageSelect.h"
 #include"SceneManager.h"
-#include"TitleScene.h"
+#include "ResultScene.h"
 GameScene::GameScene()
 {}
 GameScene::~GameScene()
@@ -73,7 +73,7 @@ void GameScene::Update()
 
 		if (sceneChange_->GetOutEndFlag())
 		{
-			BaseScene* scene = new TitleScene();
+			BaseScene* scene = new ResultScene();
 			sceneManager_->SetNextScene(scene);
 		}
 
@@ -95,10 +95,10 @@ void GameScene::Draw()
 
 	player->ScoreDraw();
 
-	if (player->GetDeadFlag() == true)
+	/*if (player->GetDeadFlag() == true)
 	{
 		Sprite::Get()->Draw(gameoverGraph, Vec2(), static_cast<float>(window_width), static_cast<float>(window_height));
-	}
+	}*/
 
 	sceneChange_->Draw();
 }

@@ -223,6 +223,7 @@
       <Filter>ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="SceneChange.cpp" />
+    <ClCompile Include="Score.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\3d\DirectionalLight.h">
@@ -385,6 +386,7 @@
       <Filter>ソースファイル\plate</Filter>
     </ClInclude>
     <ClInclude Include="SceneChange.h" />
+    <ClInclude Include="Score.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\PostEffect\DepthOfField.hlsli">

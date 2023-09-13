@@ -340,6 +340,7 @@
     <ClInclude Include="plate.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SceneChange.h" />
+    <ClInclude Include="Score.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App\scene\BaseScene.cpp" />
@@ -389,6 +390,7 @@
     <ClCompile Include="plate.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneChange.cpp" />
+    <ClCompile Include="Score.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
