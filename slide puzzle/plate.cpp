@@ -37,12 +37,12 @@ void Plate::Init()
 
 	//ステージごとにロード
 	filePath = (char*)"./Resources/stage/stage1.csv";
-	//crystalPath = (char*)"./Resources/stage/crystal1.csv";
+	
 
 
 	LoadSize(stageWidth, stageHeight, filePath);
 	LoadCSV(stage, filePath, stageWidth, stageHeight);
-	//LoadCSV(crystal, crystalPath, stageWidth, stageHeight);
+	
 	for (int j = 0; j < stageHeight; j++)
 	{
 		for (int i = 0; i < stageWidth; i++)
