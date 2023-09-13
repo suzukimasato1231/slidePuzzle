@@ -54,7 +54,7 @@ private://’è‹`
 	int scene = 0;
 
 	int endTimer_ = 0;
-
+	SpriteData sousaGraph;
 	SpriteData gameoverGraph;
 	SoundData selectSound;
 
