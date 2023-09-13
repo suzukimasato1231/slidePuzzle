@@ -53,10 +53,13 @@ void GameScene::Update()
 	lightGroup->Update();
 	if (sceneChange_->GetinEndFlag())
 	{
-		if (Input::Get()->KeybordTrigger(DIK_SPACE) && player->GetDeadFlag() == true)
+		if (player->GetDeadFlag() == true)
 		{
-			sceneChange_->SceneChangeStart("");
-			Audio::Get()->SoundSEPlayWave(selectSound);
+			if (endTimer_ > 60)
+			{
+				sceneChange_->SceneChangeStart("");
+			}
+			endTimer_++;
 		}
 		else
 		{

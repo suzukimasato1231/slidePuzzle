@@ -53,6 +53,8 @@ private://’è‹`
 	SpriteData back;
 	int scene = 0;
 
+	int endTimer_ = 0;
+
 	SpriteData gameoverGraph;
 	SoundData selectSound;
 
